@@ -1,7 +1,10 @@
 package com.example.jason.art3mis;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,6 +13,35 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
   }
+
+
+  public void Jazz(View v) {
+    String url = "https://1999jasontang.github.io/";
+    openWebPage(url);
+  }
+
+
+
+  public void openWebPage(String url) {
+    Uri parsedUri = Uri.parse(url);
+    Intent mIntent = new Intent(Intent.ACTION_VIEW, parsedUri);
+    if (mIntent.resolveActivity(getPackageManager()) != null ) {
+      startActivity(mIntent);
+    }
+  }
+
+
+
+
+
+
+
+  /////////////////////
+  /////////////////////
+  /////////////////////
+  /////////////////////
+
+
 
   public static boolean listOf100(double[] lst) {
     // Checks if the list adds up to 100
