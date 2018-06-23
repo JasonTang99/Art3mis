@@ -2,6 +2,7 @@ package com.example.jason.art3mis;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,19 +16,23 @@ public class MainActivity extends AppCompatActivity {
   }
 
 
-  public void Jazz(View v) {
+  public void openHomePage(View v) {
     String url = "https://1999jasontang.github.io/";
-    openWebPage(url);
-  }
-
-
-
-  public void openWebPage(String url) {
     Uri parsedUri = Uri.parse(url);
     Intent mIntent = new Intent(Intent.ACTION_VIEW, parsedUri);
     if (mIntent.resolveActivity(getPackageManager()) != null ) {
       startActivity(mIntent);
     }
+  }
+
+  public void shareText(View v) {
+    String mimeType = "text/plain";
+    String title = "Learn to Share";
+    ShareCompat.IntentBuilder.from(this)
+        .setChooserTitle(title)
+        .setType(mimeType)
+        .setText("Wow MildlySpicy is so cool")
+        .startChooser();
   }
 
 
