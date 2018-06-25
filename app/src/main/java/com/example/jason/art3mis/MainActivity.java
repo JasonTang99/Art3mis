@@ -27,11 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
   public void shareText(View v) {
     String mimeType = "text/plain";
-    String title = "Learn to Share";
+    String title = "Share my site";
     ShareCompat.IntentBuilder.from(this)
         .setChooserTitle(title)
         .setType(mimeType)
-        .setText("Wow MildlySpicy is so cool")
+        .setText("https://1999jasontang.github.io/")
         .startChooser();
   }
 
