@@ -12,10 +12,30 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+
+    if (savedInstanceState != null) {
+      // do stuff
+    }
     setContentView(R.layout.activity_main);
   }
+  
+  @Override
+  public void onRestoreInstanceState(Bundle savedInstanceState) {
+    // do more stuff, runs after onCreate and only if theres a save state
 
-
+  }
+  
+  public void onSaveInstanceState(Bundle outState) {
+    // outState.putString();
+    
+    // call superclass to save any view hierarchy
+    super.onSaveInstanceState(outState);
+  }
+  
+  
+  
+  
   public void openHomePage(View v) {
     String url = "https://1999jasontang.github.io/";
     Uri parsedUri = Uri.parse(url);
@@ -61,25 +81,19 @@ public class MainActivity extends AppCompatActivity {
     return input.matches("[\\d\\.\\/]*");
   }
 
-  public static double toDecimal() { // String input
-    // Gets input from user
-//    Scanner scan = new Scanner(System.in);
-//    System.out.println("Enter a number: ");
-//    String input = scan.next();
-    String input = "hi";
-
+  public static double toDecimal(String input) {
     System.out.println(input);
 
     if ( !isNum(input) ) {
       System.out.println("Check that you entered the number correctly!");
-      return toDecimal();
+      return -1.0;
     }
     else {
       if (input.contains("/")) {
         String[] splt = input.split("/");
         if (splt.length > 2) {
           System.out.println("You have too many fractions! Try again");
-          return toDecimal();
+          return -1.0;
         }
         else {
           return Double.parseDouble(splt[0]) / Double.parseDouble(splt[1]);
