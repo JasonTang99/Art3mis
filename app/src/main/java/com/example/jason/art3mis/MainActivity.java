@@ -1,13 +1,18 @@
 package com.example.jason.art3mis;
 
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
 
 public class MainActivity extends AppCompatActivity {
+	
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
     // do more stuff, runs after onCreate and only if theres a save state
-
+    super.onRestoreInstanceState(savedInstanceState);
   }
   
   public void onSaveInstanceState(Bundle outState) {
@@ -37,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
   
   
   public void openHomePage(View v) {
+    Button but2 = (Button) findViewById(R.id.button2);
+    but2.setText("Ayy you clicked me");
     String url = "https://1999jasontang.github.io/";
     Uri parsedUri = Uri.parse(url);
     Intent mIntent = new Intent(Intent.ACTION_VIEW, parsedUri);
@@ -54,7 +61,19 @@ public class MainActivity extends AppCompatActivity {
         .setText("https://1999jasontang.github.io/")
         .startChooser();
   }
-
+	
+  
+  public void openResults(View v) {
+    EditText mNumber = (EditText) findViewById(R.id.editText);
+    String enterNum = mNumber.getText().toString();
+  	Context context = this;
+  	Class targetClass = Results.class;
+  	Intent intent = new Intent(context, targetClass);
+  	intent.putExtra("Numbers", enterNum);
+  	startActivity(intent);
+  	
+  	
+	}
 
 
 
