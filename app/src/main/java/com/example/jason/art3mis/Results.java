@@ -9,9 +9,8 @@ public class Results extends AppCompatActivity {
 	@Override
   protected void onCreate(Bundle savedInstanceState) {
   	super.onCreate(savedInstanceState);
-  	Bundle extras = getIntent().getExtras();
-		
 		setContentView(R.layout.activity_results);
+		
 		TextView tv = findViewById(R.id.bob_is_not_good);
 		String sent = (String) getIntent().getSerializableExtra("Numbers");
 		tv.setText(sent);
