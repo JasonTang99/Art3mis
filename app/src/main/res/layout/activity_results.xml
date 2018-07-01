@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+  android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".Results">
+  android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
 
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/bob_is_not_good"
     android:textSize="30sp"
-    android:text="Hi im bob"/>
+    android:text="@string/app_name"
+    android:id="@+id/top_tv"/>
 
-</android.support.constraint.ConstraintLayout>
+
+  <com.example.jason.art3mis.ScrollViewWithMaxHeight
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/max_height_scroll"
+    >
+
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/scrolling_layout"
+      android:orientation="vertical">
+
+    </LinearLayout>
+
+
+
+  </com.example.jason.art3mis.ScrollViewWithMaxHeight>
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"
+    android:layout_gravity="center"
+    android:text="@string/add_work"
+    android:id="@+id/add_work_button"
+    android:onClick="moreWork"
+    />
+
+
+</LinearLayout>

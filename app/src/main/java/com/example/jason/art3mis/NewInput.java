@@ -42,14 +42,16 @@ public class NewInput extends AppCompatActivity {
 		tv1.setText("Oh hi mark");
 		tv1.setPadding(8,8,8,8);
 		
+		String num = Integer.toString(numberOfAssignments);
+		
 		TextView tv2 = new TextView(this);
-		tv2.setText("I did not hit her");
+		tv2.setText(R.string.add_work + num);
 		tv2.setPadding(8,8,8,8);
 		
 		newAssignment.addView(tv1);
 		newAssignment.addView(tv2);
 		
-		scrollingAssignments.addView(newAssignment);
+		scrollingAssignments.addView(newAssignment, scrollingAssignments.indexOfChild(findViewById(R.id.add_work_button)));
 	}
 	
 }
