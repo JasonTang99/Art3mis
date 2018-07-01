@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.File;
+
 
 public class MainActivity extends AppCompatActivity {
 	
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
   
   @Override
   public void onRestoreInstanceState(Bundle savedInstanceState) {
-    // do more stuff, runs after onCreate and only if theres a save state
+    // do more stuff, runs after onCreate and only if there's a save state
     super.onRestoreInstanceState(savedInstanceState);
   }
   
@@ -42,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
   
   
   public void openHomePage(View v) {
-    Button but2 = (Button) findViewById(R.id.button2);
-    but2.setText("Ayy you clicked me");
     String url = "https://1999jasontang.github.io/";
     Uri parsedUri = Uri.parse(url);
     Intent mIntent = new Intent(Intent.ACTION_VIEW, parsedUri);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 	
   
   public void openResults(View v) {
-    EditText mNumber = (EditText) findViewById(R.id.editText);
+    EditText mNumber = findViewById(R.id.editText);
     String enterNum = mNumber.getText().toString();
   	Context context = this;
   	Class targetClass = Results.class;
@@ -79,7 +79,15 @@ public class MainActivity extends AppCompatActivity {
     Intent intent = new Intent(this, NewInput.class);
     startActivity(intent);
   }
-
+  
+  public void showPath(View v) {
+    Button button = findViewById(R.id.button);
+    File dir = this.getFilesDir();
+    String dirString = dir.toString();
+    
+    button.setText(dirString);
+    
+  }
 
 
 

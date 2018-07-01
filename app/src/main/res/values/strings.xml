@@ -1,4 +1,10 @@
 <resources>
   <string name="app_name">Art3mis</string>
-  <string name="homeLink">Link to my Home Page</string>
+  <string name="home_link">Link to my Home Page</string>
+  <string name="new_input">New Input</string>
+  <string name="results">Results</string>
+  <string name="grade">Grade</string>
+  <string name="course">Course</string>
+  <string name="work">Assignment Name</string>
+  <string name="add_work">Add Another Assignment</string>
 </resources>

@@ -17,7 +17,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:onClick="openHomePage"
-    android:text="@string/homeLink"
+    android:text="@string/home_link"
     android:textSize="15sp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:onClick="openResults"
-    android:text="Open Results"
+    android:text="@string/results"
     android:textSize="15sp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:onClick="openNumbers"
-    android:text="Numbers"
+    android:text="@string/new_input"
     android:textSize="15sp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -70,13 +70,22 @@
     android:layout_marginBottom="8dp"
     android:layout_marginTop="232dp"
     android:ems="10"
-    android:hint="Decimal"
+    android:hint="@string/mark"
     android:inputType="numberDecimal"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:layout_editor_absoluteX="16dp" />
+
+  <Button
+    android:id="@+id/button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Click for path"
+    android:onClick="showPath"
+    tools:layout_editor_absoluteX="16dp"
+    tools:layout_editor_absoluteY="16dp" />
 
 
 </android.support.constraint.ConstraintLayout>

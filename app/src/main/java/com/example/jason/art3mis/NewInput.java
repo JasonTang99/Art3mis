@@ -2,8 +2,12 @@ package com.example.jason.art3mis;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+
+import java.io.File;
 
 public class NewInput extends AppCompatActivity {
 	
@@ -17,7 +21,6 @@ public class NewInput extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_new_input);
 	}
-	
 	
 	
 	
