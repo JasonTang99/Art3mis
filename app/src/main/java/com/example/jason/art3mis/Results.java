@@ -13,32 +13,13 @@ public class Results extends AppCompatActivity {
 
 	@Override
   protected void onCreate(Bundle savedInstanceState) {
-  	super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_results);
-		
+
 //		TextView tv = findViewById(R.id.bob_is_not_good);
 //		String sent = (String) getIntent().getSerializableExtra("Numbers");
 //		tv.setText(sent);
 		
-		ScrollViewWithMaxHeight sc = findViewById(R.id.max_height_scroll);
-		TextView tv = findViewById(R.id.top_tv);
-		Button but = findViewById(R.id.add_work_button);
-		
-		int tvHeight = tv.getHeight();
-		int butHeight = but.getHeight();
-		int totalHeight = getScreenHeight();
-		
-		sc.setMaxHeight(totalHeight - tvHeight - butHeight);
-		
-	}
-	
-	
-	public static int getScreenWidth() {
-		return Resources.getSystem().getDisplayMetrics().widthPixels;
-	}
-	
-	public static int getScreenHeight() {
-		return Resources.getSystem().getDisplayMetrics().heightPixels;
 	}
 	
 	

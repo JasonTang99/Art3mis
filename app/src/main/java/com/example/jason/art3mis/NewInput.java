@@ -1,5 +1,6 @@
 package com.example.jason.art3mis;
 
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,56 +21,83 @@ public class NewInput extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_input);
 		
+		
+		ScrollViewWithMaxHeight sc = findViewById(R.id.scroll_view_max_height);
+		EditText et_course_name = findViewById(R.id.course_name);
+		Button but = findViewById(R.id.add_work_button);
+		
+		int etHeight = et_course_name.getHeight();
+		int butHeight = but.getHeight();
+		int totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+		
+		sc.setMaxHeight(totalHeight - etHeight - butHeight);
+		
 	}
 	
-	public int numberOfAssignments = 0;
+	
 	
 	public void moreAssignments(View v) {
-		numberOfAssignments++;
+		
+		final LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+			LinearLayout.LayoutParams.MATCH_PARENT,
+			LinearLayout.LayoutParams.WRAP_CONTENT);
+		
+		
+		
 		LinearLayout scrollingAssignments = findViewById(R.id.scrolling_layout);
 		
 		LinearLayout newAssignment = new LinearLayout(this);
-		final LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 		newAssignment.setLayoutParams(params1);
 		
-//		EditText assignmentName = new EditText(this);
-//		final ViewGroup.LayoutParams param2 = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//
-//
-//
-//		EditText grade = new EditText(this);
-		TextView tv1 = new TextView(this);
-		tv1.setText("Oh hi mark");
-		tv1.setPadding(8,8,8,8);
+		int totalWidth = scrollingAssignments.getWidth();
+		int nameSize = totalWidth * 5 / 8;
+		int paddingSize = totalWidth / 8;
+		int gradeSize = totalWidth * 2 / 8;
 		
-		String num = Integer.toString(numberOfAssignments);
+		final ViewGroup.LayoutParams params2 = new ViewGroup.LayoutParams(
+			nameSize,
+			ViewGroup.LayoutParams.WRAP_CONTENT);
+		final ViewGroup.LayoutParams params3 = new ViewGroup.LayoutParams(
+			ViewGroup.LayoutParams.MATCH_PARENT,
+			ViewGroup.LayoutParams.WRAP_CONTENT);
 		
-		TextView tv2 = new TextView(this);
-		tv2.setText(R.string.add_work + num);
-		tv2.setPadding(8,8,8,8);
 		
-		newAssignment.addView(tv1);
-		newAssignment.addView(tv2);
+		EditText assignmentName = new EditText(this);
+		assignmentName.setHint(R.string.work);
+		assignmentName.setLayoutParams(params2);
+//		assignmentName.setPadding(0,0, 50,0);
 		
-		scrollingAssignments.addView(newAssignment, scrollingAssignments.indexOfChild(findViewById(R.id.add_work_button)));
+		
+		EditText grade = new EditText(this);
+		grade.setHint(R.string.worth);
+		grade.setLayoutParams(params3);
+		
+		
+//		grade.setHint(Integer.toString(totalWidth));
+		newAssignment.addView(assignmentName);
+		newAssignment.addView(grade);
+		
+		
+
+		
+		
+		
+		scrollingAssignments.addView(newAssignment);
+		
+		
+		
+		// Scrolls to the bottom of the ScrollView
+		final ScrollViewWithMaxHeight sc = findViewById(R.id.scroll_view_max_height);
+		
+		sc.post(new Runnable() {
+			@Override
+			public void run() {
+				sc.fullScroll(ScrollViewWithMaxHeight.FOCUS_DOWN);
+			}
+		});
+		
+		
 	}
 	
 }
 
-
-//<LinearLayout
-//        android:layout_width="match_parent"
-//					android:layout_height="wrap_content">
-//<TextView
-//          android:layout_width="wrap_content"
-//						android:layout_height="wrap_content"
-//						android:text="@string/new_input"
-//						android:padding="8sp"
-//						/>
-//<EditText
-//          android:layout_width="fill_parent"
-//						android:layout_height="wrap_content"
-//						android:hint="@string/grade"
-//						android:inputType="numberDecimal"
-//						/>
-//</LinearLayout>

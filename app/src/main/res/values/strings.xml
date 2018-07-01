@@ -4,6 +4,7 @@
   <string name="new_input">New Input</string>
   <string name="results">Results</string>
   <string name="grade">Grade</string>
+  <string name="worth">% of final grade</string>
   <string name="course">Course Name</string>
   <string name="work">Assignment Name</string>
   <string name="add_work">Add Another Assignment</string>
