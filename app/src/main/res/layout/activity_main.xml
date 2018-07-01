@@ -70,7 +70,7 @@
     android:layout_marginBottom="8dp"
     android:layout_marginTop="232dp"
     android:ems="10"
-    android:hint="@string/mark"
+    android:hint="@string/grade"
     android:inputType="numberDecimal"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
