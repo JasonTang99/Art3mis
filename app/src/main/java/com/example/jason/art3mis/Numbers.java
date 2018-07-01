@@ -13,7 +13,7 @@ public class Numbers extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_numbers);
 		
-		String[] textArray = {"One", "Two", "Three", "Four", "Five", "6", "7", "8", "9", "10"};
+		String[] textArray = {"One", "Two", "Three", "Four", "Five", "6", "7", "8", "9", "10","10","10","10","10","10","10"};
 		
 		
 //		LinearLayout linearLayout = new LinearLayout(this);

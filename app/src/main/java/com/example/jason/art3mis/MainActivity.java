@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	
 	public void openNumbers(View v) {
-    Intent intent = new Intent(this, Numbers.class);
+    Intent intent = new Intent(this, NewInput.class);
     startActivity(intent);
   }
 

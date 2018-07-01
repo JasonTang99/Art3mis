@@ -14,7 +14,7 @@ public class Results extends AppCompatActivity {
 		TextView tv = findViewById(R.id.bob_is_not_good);
 		String sent = (String) getIntent().getSerializableExtra("Numbers");
 		tv.setText(sent);
-    }
+	}
     
     
 }
