@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -77,8 +78,16 @@ public class NewInput extends AppCompatActivity {
 		EditText grade = new EditText(this);
 		grade.setHint(R.string.worth);
 		grade.setLayoutParams(params3);
-		grade.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
+		grade.setInputType(InputType.TYPE_CLASS_NUMBER);
+		
+		
+		
+//		grade.setKeyListener(DigitsKeyListener.getInstance("0123456789./-"));
+		
+		
+		grade.setSingleLine();
+		assignmentName.setSingleLine();
+		
 		
 //		grade.setHint(Integer.toString(totalWidth));
 		newAssignment.addView(assignmentName);
