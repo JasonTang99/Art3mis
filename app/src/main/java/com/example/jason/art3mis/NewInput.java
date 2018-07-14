@@ -1,6 +1,7 @@
 package com.example.jason.art3mis;
 
 import android.content.res.Resources;
+import android.icu.text.SimpleDateFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,7 +15,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.opencsv.CSVWriter;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class NewInput extends AppCompatActivity {
@@ -139,11 +145,60 @@ public class NewInput extends AppCompatActivity {
 			assignWorths[i] = Double.parseDouble(et_assign_worth.getText().toString());
 		}
 		
+		String strAssignNames = Arrays.toString(assignNames);
+		String strAssignWorths = Arrays.toString(assignWorths);
+		
+		
 		display.setText(
-			courseName + "\n" + Arrays.toString(assignNames) + "\n" + Arrays.toString(assignWorths)
+			courseName + "\n" + strAssignNames + "\n" + strAssignWorths
 		);
 		
+		
+		
+		
+		// Saving to Storage
+//		try {
+//			File file = new File(courseName +".csv");
+//			if (!file.exists()) {
+//				file.createNewFile();
+//			}
+//			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+//			BufferedWriter bw = new BufferedWriter(fw);
+//			bw.write(strAssignNames);
+//			bw.write(strAssignWorths);
+//			bw.close();
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			display.setText("BEEP BOOP SOMETHING IS WRONG");
+//		}
+		
+		
+		try {
+			String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+			String fileName = courseName + ".csv";
+			String filePath = baseDir + File.separator + fileName;
+			File f = new File(filePath );
+			CSVWriter writer;
+			// File exist
+			if(f.exists() && !f.isDirectory()){
+				FileWriter mFileWriter = new FileWriter(filePath , true);
+				writer = new CSVWriter(mFileWriter);
+			}
+			else {
+				writer = new CSVWriter(new FileWriter(filePath));
+			}
+			
+			writer.writeNext(assignNames);
+//			writer.writeNext(assignWorths);
+			
+			writer.close();
+		} catch (IOException e) {
+			display.setText("BEEP BOOP SOMETHING IS WRONG");
+		}
+		
 	}
+
 	
 }
 
