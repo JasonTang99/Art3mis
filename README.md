@@ -12,7 +12,7 @@ Main function is to calculate of how high a grade is needed for a certain assign
 
 I'll try to keep updating everyday but my full time job makes it a bit hard. Weekends are good long productive days. 
 
-<!-- Except for DnD Sundays with the boys -->
+Update July 16th - Reading and Writing files has been more of a struggle than anticipated. I've been especially busy with applications this week. I will done by tonight so coding this project should be back on schedule in a few days
 
 Thanks for Reading,
 Jason
