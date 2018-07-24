@@ -14,6 +14,8 @@ I'll try to keep updating everyday but my full time job makes it a bit hard. Wee
 
 Update July 16th - Reading and Writing files has been more of a struggle than anticipated. I've been especially busy with applications this week. I will done by tonight so coding this project should be back on schedule in a few days
 
+Update July 23rd - Writing is done for .txt files. Need to work on reading from them into arraylists now.
+
 Thanks for Reading,
 Jason
 
