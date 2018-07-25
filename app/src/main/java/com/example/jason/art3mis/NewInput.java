@@ -13,9 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class NewInput extends AppCompatActivity {
 	
@@ -24,6 +29,7 @@ public class NewInput extends AppCompatActivity {
 	ScrollViewWithMaxHeight sv_Max;
 	EditText et_course_name;
 	Button b_work;
+	LinearLayout ll_scroll;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class NewInput extends AppCompatActivity {
 		sv_Max = findViewById(R.id.scroll_view_max_height);
 		et_course_name = findViewById(R.id.course_name);
 		b_work = findViewById(R.id.add_work_button);
+		ll_scroll = findViewById(R.id.scrolling_layout);
 		
 		int etHeight = et_course_name.getHeight();
 		int b_work_height = b_work.getHeight();
@@ -41,17 +48,22 @@ public class NewInput extends AppCompatActivity {
 		
 		sv_Max.setMaxHeight(totalHeight - etHeight - b_work_height);
 		
+		moreAssignments();
 	}
 	
-	public void moreAssignments(View v) {
+	public void addAssignment(View v) {
+		moreAssignments();
+	}
+	
+	
+	public void moreAssignments() {
 		
 		final LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.WRAP_CONTENT);
 		
 		
-		
-		LinearLayout scrollingAssignments = findViewById(R.id.scrolling_layout);
+		LinearLayout scrollingAssignments = ll_scroll;
 		
 		LinearLayout newAssignment = new LinearLayout(this);
 		newAssignment.setLayoutParams(params1);
@@ -71,9 +83,6 @@ public class NewInput extends AppCompatActivity {
 		EditText assignmentName = new EditText(this);
 		assignmentName.setHint(R.string.work);
 		assignmentName.setLayoutParams(params2);
-//		assignmentName.setPadding(0,0, paddingSize,0);
-		
-		
 		
 		EditText grade = new EditText(this);
 		grade.setHint(R.string.worth);
@@ -88,22 +97,15 @@ public class NewInput extends AppCompatActivity {
 		grade.setSingleLine();
 		assignmentName.setSingleLine();
 		
-		
-//		grade.setHint(Integer.toString(totalWidth));
 		newAssignment.addView(assignmentName);
 		newAssignment.addView(grade);
-		
-		
-
-		
-		
 		
 		scrollingAssignments.addView(newAssignment);
 		
 		
 		
 		// Scrolls to the bottom of the ScrollView
-		final ScrollViewWithMaxHeight sc = findViewById(R.id.scroll_view_max_height);
+		final ScrollViewWithMaxHeight sc = sv_Max;
 		
 		sc.post(new Runnable() {
 			@Override
@@ -152,12 +154,17 @@ public class NewInput extends AppCompatActivity {
 		int[] ent = {5, 6, 7, 8};
 		String str = Arrays.toString(entries);
 		String str2 = Arrays.toString(ent);
+		ArrayList<String> arrCombined = new ArrayList<String>();
+		arrCombined.add(str);
+		arrCombined.add(str2);
+		String strFinal = arrCombined.toString();
 		
 		try {
 			FileOutputStream fos = openFileOutput("memes.txt", Context.MODE_PRIVATE);
-			fos.write(str.getBytes());
-			fos.write(System.getProperty("line.separator").getBytes());
-			fos.write(str2.getBytes());
+//			fos.write(str.getBytes());
+//			fos.write(System.getProperty("line.separator").getBytes());
+//			fos.write(str2.getBytes());
+			fos.write(strFinal.getBytes());
 			fos.close();
 			Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
@@ -185,6 +192,18 @@ public class NewInput extends AppCompatActivity {
 		// Take the read string, cut off the brackets
 		// Regex split by ", " and then make a for loop, casting them as ints
 		// then add
+		try {
+			ObjectMapper jsonMapper = new ObjectMapper();
+			String content = "[PSY100, [1,2,3], [3,2,4]]";
+			List list =  jsonMapper.readValue(content, List.class);
+			String str_list = list.toString();
+			Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+		} catch(com.fasterxml.jackson.databind.JsonMappingException e) {
+			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
+		} catch (IOException e) {
+			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
+			
+		}
 	}
 	
 }

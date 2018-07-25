@@ -22,9 +22,6 @@
       android:layout_height="wrap_content"
       android:id="@+id/scrolling_layout"
       android:orientation="vertical">
-
-
-
     </LinearLayout>
 
   </com.example.jason.art3mis.ScrollViewWithMaxHeight>
@@ -36,7 +33,7 @@
     android:textAlignment="center"
     android:layout_gravity="center"
     android:text="@string/add_work"
-    android:onClick="moreAssignments"
+    android:onClick="addAssignment"
     android:id="@+id/add_work_button"
     />
 
