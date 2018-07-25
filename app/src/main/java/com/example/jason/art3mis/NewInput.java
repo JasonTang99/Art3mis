@@ -14,10 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opencsv.CSVWriter;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -150,7 +152,7 @@ public class NewInput extends AppCompatActivity {
 	}
 	
 	public void write(View v) {
-		int[] entries = {1, 2, 3, 4};
+		int[] entries = {1, 1, 1, 1};
 		int[] ent = {5, 6, 7, 8};
 		String str = Arrays.toString(entries);
 		String str2 = Arrays.toString(ent);
@@ -159,13 +161,19 @@ public class NewInput extends AppCompatActivity {
 		arrCombined.add(str2);
 		String strFinal = arrCombined.toString();
 		
+		String[] yay = {"asdas", "adqweas"};
+		
 		try {
 			FileOutputStream fos = openFileOutput("memes.txt", Context.MODE_PRIVATE);
+			OutputStreamWriter osr= new OutputStreamWriter(fos);
+			CSVWriter writer = new CSVWriter(osr);
 //			fos.write(str.getBytes());
 //			fos.write(System.getProperty("line.separator").getBytes());
 //			fos.write(str2.getBytes());
-			fos.write(strFinal.getBytes());
-			fos.close();
+//			fos.write(strFinal.getBytes());
+//			fos.close();
+			writer.writeNext(yay);
+			writer.close();
 			Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
 			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
@@ -187,24 +195,24 @@ public class NewInput extends AppCompatActivity {
 		}
 	}
 	
-	public void fancyRead(View v) {
-		// Seperate
-		// Take the read string, cut off the brackets
-		// Regex split by ", " and then make a for loop, casting them as ints
-		// then add
-		try {
-			ObjectMapper jsonMapper = new ObjectMapper();
-			String content = "[PSY100, [1,2,3], [3,2,4]]";
-			List list =  jsonMapper.readValue(content, List.class);
-			String str_list = list.toString();
-			Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-		} catch(com.fasterxml.jackson.databind.JsonMappingException e) {
-			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
-		} catch (IOException e) {
-			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
-			
-		}
-	}
+//	public void fancyRead(View v) {
+//		// Seperate
+//		// Take the read string, cut off the brackets
+//		// Regex split by ", " and then make a for loop, casting them as ints
+//		// then add
+//		try {
+//			ObjectMapper jsonMapper = new ObjectMapper();
+//			String content = "[PSY100, [1,2,3], [3,2,4]]";
+//			List list =  jsonMapper.readValue(content, List.class);
+//			String str_list = list.toString();
+//			Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+//		} catch(com.fasterxml.jackson.databind.JsonMappingException e) {
+//			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
+//		} catch (IOException e) {
+//			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
+//
+//		}
+//	}
 	
 }
 
