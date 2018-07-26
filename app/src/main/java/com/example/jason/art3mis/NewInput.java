@@ -13,22 +13,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class NewInput extends AppCompatActivity {
 	
 	int totalHeight;
 	int totalWidth;
-	ScrollViewWithMaxHeight sv_Max;
+	ScrollViewWithMaxHeight sv_with_max;
 	EditText et_course_name;
 	Button b_work;
 	LinearLayout ll_scroll;
@@ -38,7 +37,7 @@ public class NewInput extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_input);
 		
-		sv_Max = findViewById(R.id.scroll_view_max_height);
+		sv_with_max = findViewById(R.id.scroll_view_max_height);
 		et_course_name = findViewById(R.id.course_name);
 		b_work = findViewById(R.id.add_work_button);
 		ll_scroll = findViewById(R.id.scrolling_layout);
@@ -48,7 +47,7 @@ public class NewInput extends AppCompatActivity {
 		totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 		totalWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
 		
-		sv_Max.setMaxHeight(totalHeight - etHeight - b_work_height);
+		sv_with_max.setMaxHeight(totalHeight - etHeight - b_work_height);
 		
 		moreAssignments();
 	}
@@ -56,7 +55,6 @@ public class NewInput extends AppCompatActivity {
 	public void addAssignment(View v) {
 		moreAssignments();
 	}
-	
 	
 	public void moreAssignments() {
 		
@@ -107,8 +105,7 @@ public class NewInput extends AppCompatActivity {
 		
 		
 		// Scrolls to the bottom of the ScrollView
-		final ScrollViewWithMaxHeight sc = sv_Max;
-		
+		final ScrollViewWithMaxHeight sc = sv_with_max;
 		sc.post(new Runnable() {
 			@Override
 			public void run() {
@@ -116,103 +113,84 @@ public class NewInput extends AppCompatActivity {
 			}
 		});
 		
-		
 	}
 	
-	public void saveWork(View v){
-		EditText et_course = findViewById(R.id.course_name);
-		Button save_work = findViewById(R.id.save_work);
-		LinearLayout linlay = findViewById(R.id.scrolling_layout);
-		TextView display = findViewById(R.id.tv_arrays);
+	public String[][] getSyllabusArray(){
+		String[] courseName = {et_course_name.getText().toString()};
 		
-		String courseName = et_course.getText().toString();
+		int numChildren = ll_scroll.getChildCount();
+		String[] assignmentNames = new String[numChildren];
+		String[] assignmentWeights = new String[numChildren];
 		
-		int numChildren = linlay.getChildCount();
-		String[] assignNames = new String[numChildren];
-		double[] assignWorths = new double[numChildren];
+		// Empty array cause no grades yet
+		String[] grades = new String[0];
 		
 		for (int i = 0; i < numChildren; i++) {
-			LinearLayout innerlinlay = (LinearLayout) linlay.getChildAt(i);
+			LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(i);
 			
-			EditText et_assign_name = (EditText) innerlinlay.getChildAt(0);
-			EditText et_assign_worth = (EditText) innerlinlay.getChildAt(1);
+			EditText et_assignment_name = (EditText) ll_inner.getChildAt(0);
+			EditText et_assignment_weight = (EditText) ll_inner.getChildAt(1);
 			
-			assignNames[i] = et_assign_name.getText().toString();
-			assignWorths[i] = Double.parseDouble(et_assign_worth.getText().toString());
+			assignmentNames[i] = et_assignment_name.getText().toString();
+			assignmentWeights[i] = et_assignment_weight.getText().toString();
 		}
-		
-		String strAssignNames = Arrays.toString(assignNames);
-		String strAssignWorths = Arrays.toString(assignWorths);
-		
-		
-		display.setText(
-			courseName + "\n" + strAssignNames + "\n" + strAssignWorths
-		);
-		
+
+		return new String[][] {courseName, assignmentNames, assignmentWeights, grades};
 	}
 	
-	public void write(View v) {
-		int[] entries = {1, 1, 1, 1};
-		int[] ent = {5, 6, 7, 8};
-		String str = Arrays.toString(entries);
-		String str2 = Arrays.toString(ent);
-		ArrayList<String> arrCombined = new ArrayList<String>();
-		arrCombined.add(str);
-		arrCombined.add(str2);
-		String strFinal = arrCombined.toString();
+	public void writeCsvToStorage(String[][] arrayToWrite) {
+		String[] courseName = getArrayAtIndex(arrayToWrite, 0);
+		String[] assignmentNames = getArrayAtIndex(arrayToWrite,1);
+		String[] assignmentWeights = getArrayAtIndex(arrayToWrite, 2);
+		String[] grades = getArrayAtIndex(arrayToWrite, 3);
 		
-		String[] yay = {"asdas", "adqweas"};
 		
 		try {
 			FileOutputStream fos = openFileOutput("memes.txt", Context.MODE_PRIVATE);
 			OutputStreamWriter osr= new OutputStreamWriter(fos);
 			CSVWriter writer = new CSVWriter(osr);
-//			fos.write(str.getBytes());
-//			fos.write(System.getProperty("line.separator").getBytes());
-//			fos.write(str2.getBytes());
-//			fos.write(strFinal.getBytes());
-//			fos.close();
-			writer.writeNext(yay);
+			
+			writer.writeNext(courseName);
+			writer.writeNext(assignmentNames);
+			writer.writeNext(assignmentWeights);
+			writer.writeNext(grades);
+			
 			writer.close();
 			Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show();
+			
 		} catch (Exception e) {
 			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	public String[] getArrayAtIndex(String[][] bigArray, int index) {
+		String[] smallArray = new String[bigArray[index].length];
+		for (int i = 0; i < bigArray[index].length; i++) {
+			smallArray[i] = bigArray[index][i];
+		}
+		return smallArray;
 	}
 	
 	public void read(View v) {
 		String text = "";
 		try {
 			FileInputStream fis = openFileInput("memes.txt");
-			int size = fis.available();
-			byte[] buffer = new byte[size];
-			fis.read(buffer);
-			fis.close();
-			text = new String(buffer);
-			Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+//			int size = fis.available();
+//			byte[] buffer = new byte[size];
+//			fis.read(buffer);
+//			fis.close();
+//			text = new String(buffer);
+//			Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+			InputStreamReader isr = new InputStreamReader(fis);
+			CSVReader reader = new CSVReader(isr);
+			
+			
+			
+			reader.close();
 		} catch (Exception e) {
 			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
-//	public void fancyRead(View v) {
-//		// Seperate
-//		// Take the read string, cut off the brackets
-//		// Regex split by ", " and then make a for loop, casting them as ints
-//		// then add
-//		try {
-//			ObjectMapper jsonMapper = new ObjectMapper();
-//			String content = "[PSY100, [1,2,3], [3,2,4]]";
-//			List list =  jsonMapper.readValue(content, List.class);
-//			String str_list = list.toString();
-//			Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-//		} catch(com.fasterxml.jackson.databind.JsonMappingException e) {
-//			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
-//		} catch (IOException e) {
-//			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
-//
-//		}
-//	}
 	
 }
 
