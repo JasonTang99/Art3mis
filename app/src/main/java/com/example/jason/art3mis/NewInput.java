@@ -10,16 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -151,7 +153,7 @@ public class NewInput extends AppCompatActivity {
 		
 		
 		try {
-			FileOutputStream fos = openFileOutput("memes.txt", Context.MODE_PRIVATE);
+			FileOutputStream fos = openFileOutput(courseName[0] + ".csv", Context.MODE_PRIVATE);
 			OutputStreamWriter osr= new OutputStreamWriter(fos);
 			CSVWriter writer = new CSVWriter(osr);
 			
@@ -201,20 +203,37 @@ public class NewInput extends AppCompatActivity {
 	public void read(View v) {
 		String text = "";
 		try {
-			FileInputStream fis = openFileInput("memes.txt");
-//			int size = fis.available();
-//			byte[] buffer = new byte[size];
-//			fis.read(buffer);
-//			fis.close();
-//			text = new String(buffer);
-//			Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-			InputStreamReader isr = new InputStreamReader(fis);
-			CSVReader reader = new CSVReader(isr);
+//			FileInputStream fis = openFileInput("AST121.csv");
+////			int size = fis.available();
+////			byte[] buffer = new byte[size];
+////			fis.read(buffer);
+////			fis.close();
+////			text = new String(buffer);
+////			Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+//			InputStreamReader isr = new InputStreamReader(fis);
+//			CSVReader reader = new CSVReader(isr);
+//			reader.readAll();
+//			reader.close();
+//			Toast.makeText(this, "Read Success", Toast.LENGTH_SHORT).show();
+			
+//			Reader read = openFileInput("AST121.csv");
+//
+//			CSVReader reader = new CSVReader(read);
+//			reader.readNext();
+//			reader.close();
+			File dir = this.getFilesDir();
+			String dirString = dir.toString();
+			
+			CSVReader reader = new CSVReader(new FileReader(dirString + "/AST121.csv"));
+			String[] nextLine;
+			while ((nextLine = reader.readNext()) != null) {
+				System.out.println(Arrays.toString(nextLine));
+			}
 			
 			
-			reader.close();
 		} catch (Exception e) {
 			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
 		}
 	}
 	
