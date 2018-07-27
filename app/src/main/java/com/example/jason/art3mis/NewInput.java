@@ -116,6 +116,11 @@ public class NewInput extends AppCompatActivity {
 	}
 	
 	public String[][] getSyllabusArray(){
+		// TODO 1: Add in check for all fields filled
+		// TODO 2: Ignore fields with blank entries
+		// TODO 3: Check that weights add up to 100
+		// TODO 4: Add highlighting for error fields (Notify user of errors)
+		
 		String[] courseName = {et_course_name.getText().toString()};
 		
 		int numChildren = ll_scroll.getChildCount();
@@ -156,10 +161,10 @@ public class NewInput extends AppCompatActivity {
 			writer.writeNext(grades);
 			
 			writer.close();
-			Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Write Success", Toast.LENGTH_SHORT).show();
 			
 		} catch (Exception e) {
-			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Beep Boop Big Error: Writing CSV to file", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
@@ -169,6 +174,28 @@ public class NewInput extends AppCompatActivity {
 			smallArray[i] = bigArray[index][i];
 		}
 		return smallArray;
+	}
+	
+	public void writeTesting(View v) {
+		String[][] testArrays = {
+			{"AST121"},
+			{"Midterm", "Final"},
+			{"29", "71"},
+			{"95", "100"},
+		};
+//		String[][] testArrays = getSyllabusArray();
+		
+		String line1 = Arrays.toString(getArrayAtIndex(testArrays, 0));
+		String line2 = Arrays.toString(getArrayAtIndex(testArrays, 1));
+		String line3 = Arrays.toString(getArrayAtIndex(testArrays, 2));
+		String line4 = Arrays.toString(getArrayAtIndex(testArrays, 3));
+		
+		System.out.println(line1);
+		System.out.println(line2);
+		System.out.println(line3);
+		System.out.println(line4);
+		
+		writeCsvToStorage(testArrays);
 	}
 	
 	public void read(View v) {
@@ -183,7 +210,6 @@ public class NewInput extends AppCompatActivity {
 //			Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 			InputStreamReader isr = new InputStreamReader(fis);
 			CSVReader reader = new CSVReader(isr);
-			
 			
 			
 			reader.close();
