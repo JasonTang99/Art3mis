@@ -1,9 +1,8 @@
 package com.example.jason.art3mis;
 
-import android.content.Context;
 import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.util.ArrayList;
+import java.io.FileWriter;
 import java.util.Arrays;
 
 public class NewInput extends AppCompatActivity {
@@ -153,9 +147,12 @@ public class NewInput extends AppCompatActivity {
 		
 		
 		try {
-			FileOutputStream fos = openFileOutput(courseName[0] + ".csv", Context.MODE_PRIVATE);
-			OutputStreamWriter osr= new OutputStreamWriter(fos);
-			CSVWriter writer = new CSVWriter(osr);
+//			FileOutputStream fos = openFileOutput(courseName[0] + ".csv", Context.MODE_PRIVATE);
+//			OutputStreamWriter osr= new OutputStreamWriter(fos);
+//			CSVWriter writer = new CSVWriter(osr);
+			File dir = this.getFilesDir();
+			String dirString = dir.toString();
+			CSVWriter writer = new CSVWriter(new FileWriter(dirString + "/testing.csv"));
 			
 			writer.writeNext(courseName);
 			writer.writeNext(assignmentNames);
@@ -180,47 +177,27 @@ public class NewInput extends AppCompatActivity {
 	
 	public void writeTesting(View v) {
 		String[][] testArrays = {
-			{"AST121"},
+			{"TEST101"},
 			{"Midterm", "Final"},
 			{"29", "71"},
 			{"95", "100"},
 		};
-//		String[][] testArrays = getSyllabusArray();
+//	String[][] testArrays = getSyllabusArray();
 		
-		String line1 = Arrays.toString(getArrayAtIndex(testArrays, 0));
-		String line2 = Arrays.toString(getArrayAtIndex(testArrays, 1));
-		String line3 = Arrays.toString(getArrayAtIndex(testArrays, 2));
-		String line4 = Arrays.toString(getArrayAtIndex(testArrays, 3));
+		File dir = this.getFilesDir();
+		String dirString = dir.toString();
 		
-		System.out.println(line1);
-		System.out.println(line2);
-		System.out.println(line3);
-		System.out.println(line4);
+		CsvReadWrite csvReadWrite = new CsvReadWrite(dirString);
+		csvReadWrite.writeCsvToStorage(testArrays);
 		
-		writeCsvToStorage(testArrays);
+
+	
+	
 	}
 	
 	public void read(View v) {
 		String text = "";
 		try {
-//			FileInputStream fis = openFileInput("AST121.csv");
-////			int size = fis.available();
-////			byte[] buffer = new byte[size];
-////			fis.read(buffer);
-////			fis.close();
-////			text = new String(buffer);
-////			Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-//			InputStreamReader isr = new InputStreamReader(fis);
-//			CSVReader reader = new CSVReader(isr);
-//			reader.readAll();
-//			reader.close();
-//			Toast.makeText(this, "Read Success", Toast.LENGTH_SHORT).show();
-			
-//			Reader read = openFileInput("AST121.csv");
-//
-//			CSVReader reader = new CSVReader(read);
-//			reader.readNext();
-//			reader.close();
 			File dir = this.getFilesDir();
 			String dirString = dir.toString();
 			
