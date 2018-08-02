@@ -1,11 +1,11 @@
 package com.example.jason.art3mis;
 
-import android.view.View;
-
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 import java.io.FileReader;
-import java.util.Arrays;
+import java.io.FileWriter;
+import java.util.ArrayList;
 
 public class CsvReadWrite {
 	private String baseDir;
@@ -22,14 +22,14 @@ public class CsvReadWrite {
 		
 		try {
 			System.out.println(baseDir + "/" + courseName[0] + ".csv");
-//			CSVWriter writer = new CSVWriter(new FileWriter(baseDir + "/" + courseName[0] + ".csv"));
-//
-//			writer.writeNext(courseName);
-//			writer.writeNext(assignmentNames);
-//			writer.writeNext(assignmentWeights);
-//			writer.writeNext(grades);
-//
-//			writer.close();
+			CSVWriter writer = new CSVWriter(new FileWriter(baseDir + "/" + courseName[0] + ".csv"));
+
+			writer.writeNext(courseName);
+			writer.writeNext(assignmentNames);
+			writer.writeNext(assignmentWeights);
+			writer.writeNext(grades);
+
+			writer.close();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,42 +44,21 @@ public class CsvReadWrite {
 		return smallArray;
 	}
 
-	public void writeTesting(View v) {
-		String[][] testArrays = {
-			{"AST121"},
-			{"Midterm", "Final"},
-			{"29", "71"},
-			{"95", "100"},
-		};
-//		String[][] testArrays = getSyllabusArray();
-
-		String line1 = Arrays.toString(getArrayAtIndex(testArrays, 0));
-		String line2 = Arrays.toString(getArrayAtIndex(testArrays, 1));
-		String line3 = Arrays.toString(getArrayAtIndex(testArrays, 2));
-		String line4 = Arrays.toString(getArrayAtIndex(testArrays, 3));
-
-		System.out.println(line1);
-		System.out.println(line2);
-		System.out.println(line3);
-		System.out.println(line4);
-
-		writeCsvToStorage(testArrays);
-	}
-
-	public void read(View v) {
-		String text = "";
+	public ArrayList<String[]> readCsvFromStorage(String courseName) {
+		ArrayList<String[]> arrList = new ArrayList<>();
 		try {
-
-			CSVReader reader = new CSVReader(new FileReader(baseDir + "/testingCsvReadWrite.csv"));
+			System.out.println(baseDir + "/" + courseName + ".csv");
+			CSVReader reader = new CSVReader(new FileReader(baseDir + "/" + courseName + ".csv"));
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
-				System.out.println(Arrays.toString(nextLine));
+				arrList.add(nextLine);
 			}
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return arrList;
+		
 	}
 
 }

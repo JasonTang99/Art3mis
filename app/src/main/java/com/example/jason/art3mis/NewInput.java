@@ -9,14 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NewInput extends AppCompatActivity {
@@ -27,6 +21,8 @@ public class NewInput extends AppCompatActivity {
 	EditText et_course_name;
 	Button b_work;
 	LinearLayout ll_scroll;
+	String baseDir;
+	CsvReadWrite csvReadWrite;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +42,10 @@ public class NewInput extends AppCompatActivity {
 		sv_with_max.setMaxHeight(totalHeight - etHeight - b_work_height);
 		
 		moreAssignments();
+		
+		baseDir = this.getFilesDir().toString();
+		csvReadWrite = new CsvReadWrite(baseDir);
+		
 	}
 	
 	public void addAssignment(View v) {
@@ -139,79 +139,26 @@ public class NewInput extends AppCompatActivity {
 		return new String[][] {courseName, assignmentNames, assignmentWeights, grades};
 	}
 	
-	public void writeCsvToStorage(String[][] arrayToWrite) {
-		String[] courseName = getArrayAtIndex(arrayToWrite, 0);
-		String[] assignmentNames = getArrayAtIndex(arrayToWrite,1);
-		String[] assignmentWeights = getArrayAtIndex(arrayToWrite, 2);
-		String[] grades = getArrayAtIndex(arrayToWrite, 3);
-		
-		
-		try {
-//			FileOutputStream fos = openFileOutput(courseName[0] + ".csv", Context.MODE_PRIVATE);
-//			OutputStreamWriter osr= new OutputStreamWriter(fos);
-//			CSVWriter writer = new CSVWriter(osr);
-			File dir = this.getFilesDir();
-			String dirString = dir.toString();
-			CSVWriter writer = new CSVWriter(new FileWriter(dirString + "/testing.csv"));
-			
-			writer.writeNext(courseName);
-			writer.writeNext(assignmentNames);
-			writer.writeNext(assignmentWeights);
-			writer.writeNext(grades);
-			
-			writer.close();
-			Toast.makeText(this, "Write Success", Toast.LENGTH_SHORT).show();
-			
-		} catch (Exception e) {
-			Toast.makeText(this, "Beep Boop Big Error: Writing CSV to file", Toast.LENGTH_SHORT).show();
-		}
-	}
-	
-	public String[] getArrayAtIndex(String[][] bigArray, int index) {
-		String[] smallArray = new String[bigArray[index].length];
-		for (int i = 0; i < bigArray[index].length; i++) {
-			smallArray[i] = bigArray[index][i];
-		}
-		return smallArray;
-	}
-	
-	public void writeTesting(View v) {
+	public void write(View v) {
 		String[][] testArrays = {
 			{"TEST101"},
-			{"Midterm", "Final"},
-			{"29", "71"},
-			{"95", "100"},
+			{"Labs", "Final"},
+			{"123123", "71"},
+			{"23", "123"},
 		};
 //	String[][] testArrays = getSyllabusArray();
-		
-		File dir = this.getFilesDir();
-		String dirString = dir.toString();
-		
-		CsvReadWrite csvReadWrite = new CsvReadWrite(dirString);
 		csvReadWrite.writeCsvToStorage(testArrays);
-		
-
-	
-	
 	}
 	
 	public void read(View v) {
-		String text = "";
-		try {
-			File dir = this.getFilesDir();
-			String dirString = dir.toString();
-			
-			CSVReader reader = new CSVReader(new FileReader(dirString + "/AST121.csv"));
-			String[] nextLine;
-			while ((nextLine = reader.readNext()) != null) {
-				System.out.println(Arrays.toString(nextLine));
-			}
-			
-			
-		} catch (Exception e) {
-			Toast.makeText(this, "Beep Boop Big Error", Toast.LENGTH_SHORT).show();
-			e.printStackTrace();
-		}
+		ArrayList<String[]> arrayList = csvReadWrite.readCsvFromStorage("TEST101");
+		String txt =
+			Arrays.toString(arrayList.get(0)) + "\n"
+			+ Arrays.toString(arrayList.get(1)) + "\n"
+			+ Arrays.toString(arrayList.get(2)) + "\n"
+			+ Arrays.toString(arrayList.get(3));
+		
+		System.out.println(txt);
 	}
 	
 }
