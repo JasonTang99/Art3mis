@@ -16,6 +16,8 @@ Update July 16th - Reading and Writing files has been more of a struggle than an
 
 Update July 23rd - Writing is done for .txt files. Need to work on reading from them into arraylists now.
 
+Update Aug 1st - Things have been busy last weekend. Interviews and stuff (Results out tomorrow wow). Should be back to normal now. CsvReadWrite is complete and functional.
+
 Thanks for Reading,
 Jason
 
