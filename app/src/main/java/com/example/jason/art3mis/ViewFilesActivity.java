@@ -36,15 +36,24 @@ public class ViewFilesActivity extends AppCompatActivity {
 		}
 		else {
 			for (String class_name: files) {
-				// TODO 5: Check for .csv ending, then strip .csv ending
-				System.out.println(class_name);
-				Button button = new Button(this);
-				button.setText(class_name);
-				button.setGravity(Gravity.CENTER);
-				button.setOnClickListener(overrideOnClick(button, class_name));
+				if (class_name.contains(".csv")) {
+					System.out.println(class_name);
+					class_name = class_name.replaceAll(".csv","");
+					System.out.println(class_name);
+					
+					final LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+						LinearLayout.LayoutParams.MATCH_PARENT,
+						LinearLayout.LayoutParams.WRAP_CONTENT);
+					
+					Button button = new Button(this);
+					button.setText(class_name);
+					button.setLayoutParams(params1);
+					button.setGravity(Gravity.CENTER);
+					button.setOnClickListener(overrideOnClick(button, class_name));
+					
+					ll_file_buttons.addView(button);
+				}
 			}
-			
-			
 		}
 		
 	}
@@ -59,7 +68,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 						+ Arrays.toString(arrayList.get(1)) + "\n"
 						+ Arrays.toString(arrayList.get(2)) + "\n"
 						+ Arrays.toString(arrayList.get(3));
-				
+
 				System.out.println(txt);
 			}
 		};
