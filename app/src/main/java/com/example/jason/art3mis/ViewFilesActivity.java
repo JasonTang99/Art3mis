@@ -1,5 +1,7 @@
 package com.example.jason.art3mis;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -70,8 +72,19 @@ public class ViewFilesActivity extends AppCompatActivity {
 						+ Arrays.toString(arrayList.get(3));
 
 				System.out.println(txt);
+				
+				startIntent(arrayList);
+				
 			}
 		};
+	}
+	
+	public void startIntent(ArrayList<String[]> arrList) {
+		Context context = this;
+		Class targetClass = Results.class;
+		Intent intent = new Intent(context, targetClass);
+		intent.putExtra("Numbers", arrList);
+		startActivity(intent);
 	}
 	
 	
