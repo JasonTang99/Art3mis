@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class NewInput extends AppCompatActivity {
+public class NewInputActivity extends AppCompatActivity {
 	
 	int totalHeight;
 	int totalWidth;
@@ -65,8 +65,8 @@ public class NewInput extends AppCompatActivity {
 		newAssignment.setLayoutParams(params1);
 		
 		int nameSize = totalWidth * 10 / 16;
-		int paddingSize = totalWidth / 16;
-		int gradeSize = totalWidth * 5 / 16;
+//		int paddingSize = totalWidth / 16;
+//		int gradeSize = totalWidth * 5 / 16;
 		
 		final ViewGroup.LayoutParams params2 = new ViewGroup.LayoutParams(
 			nameSize,
@@ -85,10 +85,7 @@ public class NewInput extends AppCompatActivity {
 		grade.setLayoutParams(params3);
 		grade.setInputType(InputType.TYPE_CLASS_NUMBER);
 		
-		
-		
 //		grade.setKeyListener(DigitsKeyListener.getInstance("0123456789./-"));
-		
 		
 		grade.setSingleLine();
 		assignmentName.setSingleLine();

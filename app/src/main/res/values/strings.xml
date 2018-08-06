@@ -3,7 +3,8 @@
 
   <string name="home_link">Link to my Home Page</string>
   <string name="new_class">Create New Class</string>
-  <string name="results">Results</string>
+  <string name="view_classes">View Existing Classes</string>
+  <string name="contact">Contact Me</string>
 
   <string name="grade">Grade</string>
   <string name="worth">% of final grade</string>

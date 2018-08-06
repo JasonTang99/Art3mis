@@ -81,9 +81,9 @@ public class ViewFilesActivity extends AppCompatActivity {
 	
 	public void startIntent(ArrayList<String[]> arrList) {
 		Context context = this;
-		Class targetClass = Results.class;
+		Class targetClass = FileOptionsActivity.class;
 		Intent intent = new Intent(context, targetClass);
-		intent.putExtra("Numbers", arrList);
+		intent.putExtra("Arraylist", arrList);
 		startActivity(intent);
 	}
 	

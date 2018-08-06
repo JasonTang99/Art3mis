@@ -20,12 +20,9 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity
-      android:name=".Results"
-      android:parentActivityName=".MainActivity"></activity>
-    <activity android:name=".Numbers"></activity>
-    <activity android:name=".NewInput"></activity>
-    <activity android:name=".ViewFilesActivity"></activity>
+    <activity android:name=".NewInputActivity" />
+    <activity android:name=".ViewFilesActivity" />
+    <activity android:name=".FileOptionsActivity"></activity>
   </application>
 
 </manifest>

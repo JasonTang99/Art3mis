@@ -1,16 +1,9 @@
 package com.example.jason.art3mis;
 
 import android.content.Intent;
-import android.content.Context;
-import android.net.Uri;
-import android.support.v4.app.ShareCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,65 +33,43 @@ public class MainActivity extends AppCompatActivity {
     super.onSaveInstanceState(outState);
   }
   
-  
-  
-  
-  public void openHomePage(View v) {
-    String url = "https://1999jasontang.github.io/";
-    Uri parsedUri = Uri.parse(url);
-    Intent mIntent = new Intent(Intent.ACTION_VIEW, parsedUri);
-    if (mIntent.resolveActivity(getPackageManager()) != null ) {
-      startActivity(mIntent);
-    }
-  }
 
-  public void shareText(View v) {
-    String mimeType = "text/plain";
-    String title = "Share my site";
-    ShareCompat.IntentBuilder.from(this)
-        .setChooserTitle(title)
-        .setType(mimeType)
-        .setText("https://1999jasontang.github.io/")
-        .startChooser();
+	
+  public void openNewFile(View v) {
+    Intent intent = new Intent(this, NewInputActivity.class);
+    startActivity(intent);
   }
-	
   
-  public void openResults(View v) {
-    EditText mNumber = findViewById(R.id.editText);
-    String enterNum = mNumber.getText().toString();
-  	Context context = this;
-  	Class targetClass = Results.class;
-  	Intent intent = new Intent(context, targetClass);
-  	intent.putExtra("Numbers", enterNum);
-  	startActivity(intent);
-  	
-  	
-	}
-	
-	public void openNumbers(View v) {
+  public void openExisting(View v) {
     Intent intent = new Intent(this, ViewFilesActivity.class);
     startActivity(intent);
   }
   
-  public void showPath(View v) {
-    Button button = findViewById(R.id.button);
-    File dir = this.getFilesDir();
-    String dirString = dir.toString();
-    
-    button.setText(dirString);
-    
-  }
-
-
-
-
-
-  /////////////////////
-  /////////////////////
-  /////////////////////
-  /////////////////////
-
-
+//  public void showPath(View v) {
+//    Button button = findViewById(R.id.button);
+//    File dir = this.getFilesDir();
+//    String dirString = dir.toString();
+//    button.setText(dirString);
+//  }
+//
+// public void openHomePage(View v) {
+//    String url = "https://1999jasontang.github.io/";
+//    Uri parsedUri = Uri.parse(url);
+//    Intent mIntent = new Intent(Intent.ACTION_VIEW, parsedUri);
+//    if (mIntent.resolveActivity(getPackageManager()) != null ) {
+//      startActivity(mIntent);
+//    }
+//  }
+//
+//  public void shareText(View v) {
+//    String mimeType = "text/plain";
+//    String title = "Share my site";
+//    ShareCompat.IntentBuilder.from(this)
+//      .setChooserTitle(title)
+//      .setType(mimeType)
+//      .setText("https://1999jasontang.github.io/")
+//      .startChooser();
+//  }
 
   public static boolean listOf100(double[] lst) {
     // Checks if the list adds up to 100
