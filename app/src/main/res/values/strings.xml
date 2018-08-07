@@ -15,4 +15,7 @@
   <string name="choose_file">Choose which class you want to open</string>
   <string name="no_files">You have no classes</string>
 
+  <string name="modify_grades">Fill In Or Modify Your grades</string>
+  <string name="current_grade">Calculate Current Grade</string>
+  <string name="how_much">Calculate How Much You Need</string>
 </resources>
