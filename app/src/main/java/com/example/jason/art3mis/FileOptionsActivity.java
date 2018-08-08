@@ -32,8 +32,8 @@ public class FileOptionsActivity extends AppCompatActivity {
 		grades = sent.get(3);
 		
 		if (isEmpty(grades)) {
-			// TODO 6: Change this intent to editGradesActivity once created
-			Intent intent = new Intent(this, MainActivity.class);
+			Intent intent = new Intent(this, EditGradesActivity.class);
+			intent.putExtra("Arraylist", sent);
 			startActivity(intent);
 		}
 		
@@ -42,8 +42,7 @@ public class FileOptionsActivity extends AppCompatActivity {
 	}
 	
 	public void openGrades(View v) {
-		// TODO 7: Change this intent to editGradesActivity once created
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, EditGradesActivity.class);
 		intent.putExtra("Arraylist", sent);
 		startActivity(intent);
 	}

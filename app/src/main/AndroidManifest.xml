@@ -22,7 +22,8 @@
     </activity>
     <activity android:name=".NewInputActivity" />
     <activity android:name=".ViewFilesActivity" />
-    <activity android:name=".FileOptionsActivity"></activity>
+    <activity android:name=".FileOptionsActivity" />
+    <activity android:name=".EditGradesActivity"></activity>
   </application>
 
 </manifest>

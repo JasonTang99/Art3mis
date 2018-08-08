@@ -54,35 +54,33 @@ public class NewInputActivity extends AppCompatActivity {
 	
 	public void moreAssignments() {
 		
-		final LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+		LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.WRAP_CONTENT);
-		
 		
 		LinearLayout scrollingAssignments = ll_scroll;
 		
 		LinearLayout newAssignment = new LinearLayout(this);
 		newAssignment.setLayoutParams(params1);
 		
-		int nameSize = totalWidth * 10 / 16;
-//		int paddingSize = totalWidth / 16;
-//		int gradeSize = totalWidth * 5 / 16;
+		LinearLayout.LayoutParams paramName = new LinearLayout.LayoutParams(
+			0,
+			ViewGroup.LayoutParams.WRAP_CONTENT);
+		paramName.weight = 60;
 		
-		final ViewGroup.LayoutParams params2 = new ViewGroup.LayoutParams(
-			nameSize,
+		LinearLayout.LayoutParams paramWeight = new LinearLayout.LayoutParams(
+			0,
 			ViewGroup.LayoutParams.WRAP_CONTENT);
-		final ViewGroup.LayoutParams params3 = new ViewGroup.LayoutParams(
-			ViewGroup.LayoutParams.MATCH_PARENT,
-			ViewGroup.LayoutParams.WRAP_CONTENT);
+		paramWeight.weight = 35;
 		
 		
 		EditText assignmentName = new EditText(this);
 		assignmentName.setHint(R.string.work);
-		assignmentName.setLayoutParams(params2);
+		assignmentName.setLayoutParams(paramName);
 		
 		EditText grade = new EditText(this);
 		grade.setHint(R.string.worth);
-		grade.setLayoutParams(params3);
+		grade.setLayoutParams(paramWeight);
 		grade.setInputType(InputType.TYPE_CLASS_NUMBER);
 		
 //		grade.setKeyListener(DigitsKeyListener.getInstance("0123456789./-"));
