@@ -18,6 +18,8 @@ Update July 23rd - Writing is done for .txt files. Need to work on reading from 
 
 Update Aug 1st - Things have been busy last weekend. Interviews and stuff (Results out tomorrow wow). Should be back to normal now. CsvReadWrite is complete and functional.
 
+Update Aug 7th - Got into the interview thingy, added a lot of new activities that does stuff, got rid of old activities that did not do stuff. Learned that I had spent all my time formatting spacing when i could've used layout_weight instead.
+
 Thanks for Reading,
 Jason
 
