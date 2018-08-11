@@ -14,11 +14,11 @@ public class CsvReadWrite {
 		baseDir = directory;
 	}
 	
-	public void writeCsvToStorage(String[][] arrayToWrite) {
-		String[] courseName = getArrayAtIndex(arrayToWrite, 0);
-		String[] assignmentNames = getArrayAtIndex(arrayToWrite, 1);
-		String[] assignmentWeights = getArrayAtIndex(arrayToWrite, 2);
-		String[] grades = getArrayAtIndex(arrayToWrite, 3);
+	public void writeCsvToStorage(ArrayList<String[]> arrayToWrite) {
+		String[] courseName = arrayToWrite.get(0);
+		String[] assignmentNames = arrayToWrite.get(1);
+		String[] assignmentWeights = arrayToWrite.get(2);
+		String[] grades = arrayToWrite.get(3);
 		
 		try {
 			System.out.println(baseDir + "/" + courseName[0] + ".csv");
@@ -36,13 +36,13 @@ public class CsvReadWrite {
 		}
 	}
 	
-	public String[] getArrayAtIndex(String[][] bigArray, int index) {
-		String[] smallArray = new String[bigArray[index].length];
-		for (int i = 0; i < bigArray[index].length; i++) {
-			smallArray[i] = bigArray[index][i];
-		}
-		return smallArray;
-	}
+//	public String[] getArrayAtIndex(String[][] bigArray, int index) {
+//		String[] smallArray = new String[bigArray[index].length];
+//		for (int i = 0; i < bigArray[index].length; i++) {
+//			smallArray[i] = bigArray[index][i];
+//		}
+//		return smallArray;
+//	}
 
 	public ArrayList<String[]> readCsvFromStorage(String courseName) {
 		ArrayList<String[]> arrList = new ArrayList<>();

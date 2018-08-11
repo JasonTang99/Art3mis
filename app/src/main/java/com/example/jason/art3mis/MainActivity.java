@@ -71,14 +71,6 @@ public class MainActivity extends AppCompatActivity {
 //      .startChooser();
 //  }
 
-  public static boolean listOf100(double[] lst) {
-    // Checks if the list adds up to 100
-    double sum = 0.0;
-    for (double item: lst) {
-      sum += item;
-    }
-    return sum == 100.0;
-  }
 
   public static boolean isNum(String input) {
     return input.matches("[\\d\\.\\/]*");

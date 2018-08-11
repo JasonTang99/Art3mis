@@ -20,6 +20,8 @@ Update Aug 1st - Things have been busy last weekend. Interviews and stuff (Resul
 
 Update Aug 7th - Got into the interview thingy, added a lot of new activities that does stuff, got rid of old activities that did not do stuff. Learned that I had spent all my time formatting spacing when i could've used layout_weight instead.
 
+Update Aug 10th - I hate summer, arraylists are superior to arrays, I standardized the format of the sent arraylist across all the classes.
+
 Thanks for Reading,
 Jason
 

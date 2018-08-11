@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.view.View;
+
 
 import java.util.ArrayList;
 
@@ -56,7 +58,7 @@ public class EditGradesActivity extends AppCompatActivity {
 			ll_entry.setLayoutParams(paramEntry);
 			
 			TextView tv_question = new TextView(this);
-			tv_question.setText("What did you get on " + assignmentNames[a]);
+			tv_question.setText("What did you get on " + assignmentNames[a] + "?");
 			tv_question.setSingleLine();
 			tv_question.setLayoutParams(paramQuestion);
 			
@@ -75,8 +77,14 @@ public class EditGradesActivity extends AppCompatActivity {
 			
 			ll_grades.addView(ll_entry);
 			
-			
 		}
+	}
+	
+	
+	public void getGrades(View v) {
+		int numGrades = ll_grades.getChildCount();
+		String[] newGrades = new String[numGrades];
+		
 	}
 	
 }

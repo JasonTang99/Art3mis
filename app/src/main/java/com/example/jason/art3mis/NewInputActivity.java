@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class NewInputActivity extends AppCompatActivity {
 		totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 		totalWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
 		
-		sv_with_max.setMaxHeight(totalHeight - etHeight - b_work_height);
+		sv_with_max.setMaxHeight(totalHeight - etHeight - (b_work_height * 2));
 		
 		moreAssignments();
 		
@@ -106,43 +107,100 @@ public class NewInputActivity extends AppCompatActivity {
 		
 	}
 	
-	public String[][] getSyllabusArray(){
-		// TODO 1: Add in check for all fields filled
-		// TODO 2: Ignore fields with blank entries
+	public ArrayList<String[]> getSyllabusArray(View v){
+		// Returns null if improperly formatted
+		
 		// TODO 3: Check that weights add up to 100
 		// TODO 4: Add highlighting for error fields (Notify user of errors)
 		
+		boolean properFormat = true;
+		
+		ArrayList<String[]> sent = new ArrayList<>();
+		
 		String[] courseName = {et_course_name.getText().toString()};
+		if (courseName[0].equals("")) {
+			// TODO: add in highlighting
+			properFormat = false;
+		}
 		
+		sent.add(courseName);
+		
+		ArrayList<String> assignmentNames = new ArrayList<>();
+		ArrayList<String> assignmentWeights = new ArrayList<>();
 		int numChildren = ll_scroll.getChildCount();
-		String[] assignmentNames = new String[numChildren];
-		String[] assignmentWeights = new String[numChildren];
-		
-		// Empty array cause no grades yet
-		String[] grades = new String[0];
 		
 		for (int i = 0; i < numChildren; i++) {
 			LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(i);
-			
+
 			EditText et_assignment_name = (EditText) ll_inner.getChildAt(0);
 			EditText et_assignment_weight = (EditText) ll_inner.getChildAt(1);
 			
-			assignmentNames[i] = et_assignment_name.getText().toString();
-			assignmentWeights[i] = et_assignment_weight.getText().toString();
+			String str_assignment_name = et_assignment_name.getText().toString();
+			String str_assignment_weight = et_assignment_weight.getText().toString();
+			
+			// Both are filled
+			if (!str_assignment_name.equals("") && !str_assignment_weight.equals("")) {
+				assignmentNames.add(str_assignment_name);
+				assignmentWeights.add(str_assignment_weight);
+			}
+			// Name is filled but weight isnt
+			else if (!str_assignment_name.equals("") && str_assignment_weight.equals("")) {
+				properFormat = false;
+				Toast.makeText(this,"Weight isn't filled in", Toast.LENGTH_SHORT).show();
+				// TODO: add in highlighting
+			}
+			// Weight is filled but name isnt
+			else if (str_assignment_name.equals("") && !str_assignment_weight.equals("")) {
+				properFormat = false;
+				// TODO: add in highlighting
+			}
 		}
-
-		return new String[][] {courseName, assignmentNames, assignmentWeights, grades};
+		
+		// Name and weight is empty
+		if (assignmentNames.size() == 0 || assignmentWeights.size() == 0) {
+			// TODO: add in highlighting
+			properFormat = false;
+		}
+		String[] lst_names = assignmentNames.toArray(new String[0]);
+		String[] lst_weights = assignmentWeights.toArray(new String[0]);
+		
+		// Check if weights add up to 100
+		if (!listOf100(lst_weights)) {
+			// TODO: add in highlighting
+			properFormat = false;
+			Toast.makeText(this,"This doesn't add up :thinking:", Toast.LENGTH_SHORT).show();
+		}
+		
+		sent.add(lst_names);
+		sent.add(lst_weights);
+		
+		
+		
+		// Empty array cause no grades yet
+		String[] grades = new String[numChildren];
+		Arrays.fill(grades, "");
+		
+		sent.add(grades);
+		
+		
+		
+		if (properFormat) {
+			return sent;
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public void write(View v) {
-		String[][] testArrays = {
-			{"TEST101"},
-			{"Labs", "Final"},
-			{"123123", "71"},
-			{"23", "123"},
-		};
-//	String[][] testArrays = getSyllabusArray();
-		csvReadWrite.writeCsvToStorage(testArrays);
+		ArrayList<String[]> testArrays = getSyllabusArray(v);
+		if (testArrays == null) {
+			Toast.makeText(this, "Something went boom", Toast.LENGTH_SHORT).show();
+			// TODO: remember that this ^ stuff works
+		}
+		else {
+			csvReadWrite.writeCsvToStorage(testArrays);
+		}
 	}
 	
 	public void read(View v) {
@@ -154,6 +212,16 @@ public class NewInputActivity extends AppCompatActivity {
 			+ Arrays.toString(arrayList.get(3));
 		
 		System.out.println(txt);
+	}
+	
+	
+	public boolean listOf100(String[] lst) {
+		// Checks if the list adds up to 100
+		double sum = 0.0;
+		for (String item: lst) {
+			sum += Double.parseDouble(item);
+		}
+		return sum == 100.0;
 	}
 	
 }
