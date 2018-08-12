@@ -128,26 +128,5 @@ public class MainActivity extends AppCompatActivity {
 
 
   }
-
-//    Functions
-//    Reading from stored files, making new files (auto make new files if no old files?)
-//    --------------------
-//    Properties of the files
-//    - Name of class
-//    - Names of assignments/tests
-//    - Weights of assignments/tests
-//    - Values of previously entered marks
-//    Types
-//    - String
-//    - String[]
-//    - String[]
-//    - String[]
-//
-//    --------------------
-//    What we can do with the files
-//    - If there are no grades then get new ones
-//    - Fill in missing grades
-//    - Calculate current grade
-//    - Rewrite grades
-//    - Calculate how much you need
+  
 }

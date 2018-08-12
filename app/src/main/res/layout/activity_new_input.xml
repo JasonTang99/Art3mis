@@ -37,30 +37,14 @@
     android:id="@+id/add_work_button"
     />
 
-  <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAlignment="center"
-    android:layout_gravity="center"
-    android:text="Save your work"
-    android:onClick="write"
-    android:id="@+id/save_work"
-    />
-  <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAlignment="center"
-    android:layout_gravity="center"
-    android:text="read your work"
-    android:onClick="read"
-    android:id="@+id/read"
-    />
-
-  <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/tv_arrays"/>
-
-
+  <!--<Button-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textAlignment="center"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:text="Save your work"-->
+    <!--android:onClick="write"-->
+    <!--android:id="@+id/save_work"-->
+    <!--/>-->
 
 </LinearLayout>

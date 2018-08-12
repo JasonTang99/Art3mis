@@ -4,6 +4,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,6 +50,27 @@ public class NewInputActivity extends AppCompatActivity {
 		baseDir = this.getFilesDir().toString();
 		csvReadWrite = new CsvReadWrite(baseDir);
 		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_bar_done:
+				// User chose the "Settings" item, show the app settings UI...
+				write(findViewById(android.R.id.content));
+				return true;
+			
+			default:
+				return super.onOptionsItemSelected(item);
+			
+		}
 	}
 	
 	public void addAssignment(View v) {
@@ -109,8 +133,6 @@ public class NewInputActivity extends AppCompatActivity {
 	
 	public ArrayList<String[]> getSyllabusArray(View v){
 		// Returns null if improperly formatted
-		
-		// TODO 3: Check that weights add up to 100
 		// TODO 4: Add highlighting for error fields (Notify user of errors)
 		
 		boolean properFormat = true;
@@ -152,7 +174,11 @@ public class NewInputActivity extends AppCompatActivity {
 			// Weight is filled but name isnt
 			else if (str_assignment_name.equals("") && !str_assignment_weight.equals("")) {
 				properFormat = false;
+				Toast.makeText(this,"Name isn't filled in", Toast.LENGTH_SHORT).show();
 				// TODO: add in highlighting
+			}
+			else {
+				numChildren--;
 			}
 		}
 		
@@ -160,6 +186,8 @@ public class NewInputActivity extends AppCompatActivity {
 		if (assignmentNames.size() == 0 || assignmentWeights.size() == 0) {
 			// TODO: add in highlighting
 			properFormat = false;
+			Toast.makeText(this,"Fill in at least one assignment", Toast.LENGTH_SHORT).show();
+			
 		}
 		String[] lst_names = assignmentNames.toArray(new String[0]);
 		String[] lst_weights = assignmentWeights.toArray(new String[0]);
@@ -168,21 +196,17 @@ public class NewInputActivity extends AppCompatActivity {
 		if (!listOf100(lst_weights)) {
 			// TODO: add in highlighting
 			properFormat = false;
-			Toast.makeText(this,"This doesn't add up :thinking:", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this,"This doesn't add up to 100", Toast.LENGTH_SHORT).show();
 		}
 		
 		sent.add(lst_names);
 		sent.add(lst_weights);
 		
-		
-		
 		// Empty array cause no grades yet
-		String[] grades = new String[numChildren];
+		String[] grades = new String[lst_names.length];
 		Arrays.fill(grades, "");
 		
 		sent.add(grades);
-		
-		
 		
 		if (properFormat) {
 			return sent;
@@ -194,24 +218,27 @@ public class NewInputActivity extends AppCompatActivity {
 	
 	public void write(View v) {
 		ArrayList<String[]> testArrays = getSyllabusArray(v);
-		if (testArrays == null) {
-			Toast.makeText(this, "Something went boom", Toast.LENGTH_SHORT).show();
-			// TODO: remember that this ^ stuff works
-		}
-		else {
+		if (testArrays != null) {
 			csvReadWrite.writeCsvToStorage(testArrays);
 		}
 	}
 	
 	public void read(View v) {
-		ArrayList<String[]> arrayList = csvReadWrite.readCsvFromStorage("TEST101");
-		String txt =
-			Arrays.toString(arrayList.get(0)) + "\n"
-			+ Arrays.toString(arrayList.get(1)) + "\n"
-			+ Arrays.toString(arrayList.get(2)) + "\n"
-			+ Arrays.toString(arrayList.get(3));
-		
-		System.out.println(txt);
+		// courseName is a string not a string[] here
+		String courseName = et_course_name.getText().toString();
+		if (courseName.equals("")) {
+			Toast.makeText(this,"Enter a course name", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			ArrayList<String[]> arrayList = csvReadWrite.readCsvFromStorage(courseName);
+			String txt =
+				Arrays.toString(arrayList.get(0)) + "\n"
+					+ Arrays.toString(arrayList.get(1)) + "\n"
+					+ Arrays.toString(arrayList.get(2)) + "\n"
+					+ Arrays.toString(arrayList.get(3));
+			
+			System.out.println(txt);
+		}
 	}
 	
 	
