@@ -18,6 +18,9 @@
   <string name="modify_grades">Fill In Or Modify Your grades</string>
   <string name="current_grade">Calculate Current Grade</string>
   <string name="how_much">Calculate How Much You Need</string>
+  <string name="what_grade">Desired Final Grade</string>
 
   <string name="done">Done</string>
+
+
 </resources>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +49,16 @@ public class FileOptionsActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 	
-	public void openHowMuch(View v) {
-		// TODO 8: Change this intent to howMuchActivity once created
-		Intent intent = new Intent(this, MainActivity.class);
-		intent.putExtra("Arraylist", sent);
-		startActivity(intent);
+	public void calcHowMuch(View v) {
+		EditText et_how_much = findViewById(R.id.et_how_much);
+		String how_much = et_how_much.getText().toString();
+		if (!how_much.equals("")) {
+			howMuchDoINeed(Double.parseDouble(how_much));
+		}
+		else {
+			Toast.makeText(this,"Enter a desired final grade", Toast.LENGTH_SHORT).show();
+		}
+		
 	}
 	
 	public void calcCurrentGrade(View v) {
@@ -77,7 +84,6 @@ public class FileOptionsActivity extends AppCompatActivity {
 		tv_current_grade.setText("Your current grade is: " + df.format(current_grade));
 	}
 	
-	
 	public boolean isEmpty(String[] lst) {
 		if (lst.length == 0) {
 			return true;
@@ -94,5 +100,42 @@ public class FileOptionsActivity extends AppCompatActivity {
 		return empty;
 	}
 	
-	
+	public void howMuchDoINeed(double final_grade) {
+		int counter = 0;
+		int missing_index = 0;
+		int a = 0;
+		double total_grade = 0;
+		
+		while (a < grades.length) {
+			if (grades[a].equals("")) {
+				counter++;
+				missing_index = a;
+			}
+			else {
+				total_grade += Double.parseDouble(grades[a]) * Double.parseDouble(assignmentWeights[a]) / 100.0;
+			}
+			a++;
+		}
+		
+		if (counter > 1) {
+			System.out.println("Fill up the grades until only one is left blank please");
+			Toast.makeText(this,"Fill up the grades until only one is left", Toast.LENGTH_SHORT).show();
+			Button b_how_much = findViewById(R.id.b_how_much);
+			b_how_much.setClickable(false);
+		}
+		else if (counter == 0) {
+			System.out.println("All your grades are already filled in");
+			Toast.makeText(this,"All your grades are already filled in", Toast.LENGTH_SHORT).show();
+			Button b_how_much = findViewById(R.id.b_how_much);
+			b_how_much.setClickable(false);
+		}
+		else {
+			double howMuch = (final_grade - total_grade) * 100 / Double.parseDouble(assignmentWeights[missing_index]);
+			String msg = "You need " + howMuch + " on your " + assignmentNames[missing_index] + " to get a final mark of " + final_grade;
+			System.out.println(msg);
+			TextView tv_how_much = findViewById(R.id.tv_how_much);
+			tv_how_much.setText(msg);
+		}
+		
+	}
 }

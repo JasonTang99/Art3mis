@@ -6,7 +6,6 @@
   android:layout_height="match_parent"
   tools:context=".FileOptionsActivity">
 
-
   <Button
     android:id="@+id/b_edit_grades"
     android:layout_width="wrap_content"
@@ -54,6 +53,7 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:text="@string/how_much"
+    android:onClick="calcHowMuch"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -76,5 +76,39 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+    android:id="@+id/et_how_much"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:ems="10"
+    android:hint="@string/what_grade"
+    android:inputType="numberDecimal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/b_how_much" />
+
+  <TextView
+    android:id="@+id/tv_how_much"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:text=""
+    app:layout_constraintBottom_toTopOf="@+id/b_edit_grades"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/tv_current_grade" />
 
 </android.support.constraint.ConstraintLayout>

@@ -3,12 +3,14 @@ package com.example.jason.art3mis;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.View;
-
 
 import java.util.ArrayList;
 
@@ -23,10 +25,16 @@ public class EditGradesActivity extends AppCompatActivity {
 	
 	LinearLayout ll_grades;
 	
+	String baseDir;
+	CsvReadWrite csvReadWrite;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_grades);
+		
+		baseDir = this.getFilesDir().toString();
+		csvReadWrite = new CsvReadWrite(baseDir);
 		
 		sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
 		courseName = sent.get(0);
@@ -38,8 +46,29 @@ public class EditGradesActivity extends AppCompatActivity {
 		fillScrollView();
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_bar_done:
+				// Gets the activity view
+				write(findViewById(android.R.id.content));
+				return true;
+			
+			default:
+				return super.onOptionsItemSelected(item);
+			
+		}
+	}
+	
 	public void fillScrollView(){
-		for (int a = 0; a < assignmentWeights.length; a++) {
+		for (int a = 0; a < assignmentNames.length; a++) {
 			LinearLayout.LayoutParams paramEntry = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -81,10 +110,27 @@ public class EditGradesActivity extends AppCompatActivity {
 	}
 	
 	
-	public void getGrades(View v) {
-		int numGrades = ll_grades.getChildCount();
-		String[] newGrades = new String[numGrades];
+	public ArrayList<String[]> getGrades(View v) {
+//		int numGrades = ll_grades.getChildCount();
+		String[] newGrades = new String[assignmentNames.length];
 		
+		for (int a = 0; a < assignmentNames.length; a++) {
+			LinearLayout ll_inner = (LinearLayout) ll_grades.getChildAt(a);
+			// The first element (index 0) is the question textview
+			EditText et_grade = (EditText) ll_inner.getChildAt(1);
+			String grade = et_grade.getText().toString();
+			
+			newGrades[a] = grade;
+		}
+		
+		sent.remove(sent.size() - 1);
+		sent.add(newGrades);
+		return sent;
+	}
+	
+	public void write(View v) {
+		ArrayList<String[]> testArrays = getGrades(v);
+		csvReadWrite.writeCsvToStorage(testArrays);
 	}
 	
 }

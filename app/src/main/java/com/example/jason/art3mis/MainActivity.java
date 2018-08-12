@@ -99,34 +99,5 @@ public class MainActivity extends AppCompatActivity {
       }
     }
   }
-
-  public static void howMuchDoINeed(String[] work, String[] weights, String[] grades, double fin) {
-    int counter = 0;
-    int missing_index = 0;
-    int a = 0;
-    double total_grade = 0;
-
-    while (a < grades.length) {
-      if (grades[a].equals("")) {
-        counter++;
-        missing_index = a;
-      }
-      else {
-        total_grade += Double.parseDouble(grades[a]) * Double.parseDouble(weights[a]) / 100.0;
-      }
-      a++;
-    }
-
-    if (counter > 1) {
-      System.out.println("Fill up the grades until only one is left blank please");
-      // Fill in method
-    }
-    else {
-      double howMuch = (fin - total_grade) * 100 / Double.parseDouble(weights[missing_index]);
-      System.out.println("You need " + howMuch + " on your " + work[missing_index] + " to get a final mark of " + fin);
-    }
-
-
-  }
   
 }

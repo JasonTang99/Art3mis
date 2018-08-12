@@ -43,7 +43,7 @@ public class NewInputActivity extends AppCompatActivity {
 		totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 		totalWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
 		
-		sv_with_max.setMaxHeight(totalHeight - etHeight - (b_work_height * 2));
+		sv_with_max.setMaxHeight(totalHeight - etHeight - b_work_height);
 		
 		moreAssignments();
 		
@@ -63,7 +63,7 @@ public class NewInputActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.action_bar_done:
-				// User chose the "Settings" item, show the app settings UI...
+				// Gets the activity view
 				write(findViewById(android.R.id.content));
 				return true;
 			
@@ -79,14 +79,14 @@ public class NewInputActivity extends AppCompatActivity {
 	
 	public void moreAssignments() {
 		
-		LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.WRAP_CONTENT);
 		
 		LinearLayout scrollingAssignments = ll_scroll;
 		
 		LinearLayout newAssignment = new LinearLayout(this);
-		newAssignment.setLayoutParams(params1);
+		newAssignment.setLayoutParams(params);
 		
 		LinearLayout.LayoutParams paramName = new LinearLayout.LayoutParams(
 			0,
@@ -103,18 +103,19 @@ public class NewInputActivity extends AppCompatActivity {
 		assignmentName.setHint(R.string.work);
 		assignmentName.setLayoutParams(paramName);
 		
-		EditText grade = new EditText(this);
-		grade.setHint(R.string.worth);
-		grade.setLayoutParams(paramWeight);
-		grade.setInputType(InputType.TYPE_CLASS_NUMBER);
+		EditText assignmentWeight = new EditText(this);
+		assignmentWeight.setHint(R.string.worth);
+		assignmentWeight.setLayoutParams(paramWeight);
+		assignmentWeight.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		
-//		grade.setKeyListener(DigitsKeyListener.getInstance("0123456789./-"));
+		// TODO: Allow fractional input
+//		assignmentWeight.setKeyListener(DigitsKeyListener.getInstance("0123456789./-"));
 		
-		grade.setSingleLine();
+		assignmentWeight.setSingleLine();
 		assignmentName.setSingleLine();
 		
 		newAssignment.addView(assignmentName);
-		newAssignment.addView(grade);
+		newAssignment.addView(assignmentWeight);
 		
 		scrollingAssignments.addView(newAssignment);
 		
@@ -176,9 +177,6 @@ public class NewInputActivity extends AppCompatActivity {
 				properFormat = false;
 				Toast.makeText(this,"Name isn't filled in", Toast.LENGTH_SHORT).show();
 				// TODO: add in highlighting
-			}
-			else {
-				numChildren--;
 			}
 		}
 		
