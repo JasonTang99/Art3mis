@@ -35,14 +35,6 @@ public class CsvReadWrite {
 			e.printStackTrace();
 		}
 	}
-	
-//	public String[] getArrayAtIndex(String[][] bigArray, int index) {
-//		String[] smallArray = new String[bigArray[index].length];
-//		for (int i = 0; i < bigArray[index].length; i++) {
-//			smallArray[i] = bigArray[index][i];
-//		}
-//		return smallArray;
-//	}
 
 	public ArrayList<String[]> readCsvFromStorage(String courseName) {
 		ArrayList<String[]> arrList = new ArrayList<>();
@@ -58,7 +50,8 @@ public class CsvReadWrite {
 		}
 		
 		return arrList;
-		
 	}
 
+	
+	
 }

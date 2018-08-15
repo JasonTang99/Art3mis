@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class EditGradesActivity extends AppCompatActivity {
 	
 	ArrayList<String[]> sent;
-	
 	String[] courseName;
 	String[] assignmentNames;
 	String[] assignmentWeights;
@@ -33,9 +32,11 @@ public class EditGradesActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_grades);
 		
+		// Get Writer and Reader
 		baseDir = this.getFilesDir().toString();
 		csvReadWrite = new CsvReadWrite(baseDir);
 		
+		// Get intent extras
 		sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
 		courseName = sent.get(0);
 		assignmentNames = sent.get(1);
@@ -46,6 +47,7 @@ public class EditGradesActivity extends AppCompatActivity {
 		fillScrollView();
 	}
 	
+	// Adds "Done" to action bar
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -53,12 +55,14 @@ public class EditGradesActivity extends AppCompatActivity {
 		return true;
 	}
 	
+	// Adds "Done" to action bar
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.action_bar_done:
 				// Gets the activity view
 				write(findViewById(android.R.id.content));
+				// TODO: Add somewhere to go after done
 				return true;
 			
 			default:
@@ -96,7 +100,7 @@ public class EditGradesActivity extends AppCompatActivity {
 			et_grade.setInputType(InputType.TYPE_CLASS_NUMBER);
 			et_grade.setSingleLine();
 			
-			
+			// Adds in grade if its available
 			if (grades[a] != null && !grades[a].equals("")) {
 				et_grade.setText(grades[a]);
 			}
@@ -111,7 +115,6 @@ public class EditGradesActivity extends AppCompatActivity {
 	
 	
 	public ArrayList<String[]> getGrades(View v) {
-//		int numGrades = ll_grades.getChildCount();
 		String[] newGrades = new String[assignmentNames.length];
 		
 		for (int a = 0; a < assignmentNames.length; a++) {

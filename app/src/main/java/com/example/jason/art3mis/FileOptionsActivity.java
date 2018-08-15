@@ -49,18 +49,6 @@ public class FileOptionsActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 	
-	public void calcHowMuch(View v) {
-		EditText et_how_much = findViewById(R.id.et_how_much);
-		String how_much = et_how_much.getText().toString();
-		if (!how_much.equals("")) {
-			howMuchDoINeed(Double.parseDouble(how_much));
-		}
-		else {
-			Toast.makeText(this,"Enter a desired final grade", Toast.LENGTH_SHORT).show();
-		}
-		
-	}
-	
 	public void calcCurrentGrade(View v) {
 		double total1 = 0.0;
 		double total2 = 0.0;
@@ -74,7 +62,7 @@ public class FileOptionsActivity extends AppCompatActivity {
 		
 		double current_grade = 0.0;
 		if (total2 == 0) {
-			Toast.makeText(this, "Your file is broken, rip", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "You don't have any weight values", Toast.LENGTH_SHORT).show();
 		}
 		else {
 			current_grade = total1/total2;
@@ -82,6 +70,18 @@ public class FileOptionsActivity extends AppCompatActivity {
 		
 		TextView tv_current_grade = findViewById(R.id.tv_current_grade);
 		tv_current_grade.setText("Your current grade is: " + df.format(current_grade));
+	}
+	
+	public void calcHowMuch(View v) {
+		EditText et_how_much = findViewById(R.id.et_how_much);
+		String how_much = et_how_much.getText().toString();
+		if (!how_much.equals("")) {
+			howMuchDoINeed(Double.parseDouble(how_much));
+		}
+		else {
+			Toast.makeText(this,"Enter a desired final grade", Toast.LENGTH_SHORT).show();
+		}
+		
 	}
 	
 	public boolean isEmpty(String[] lst) {

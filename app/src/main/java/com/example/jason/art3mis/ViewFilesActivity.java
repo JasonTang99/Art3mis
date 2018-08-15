@@ -1,6 +1,5 @@
 package com.example.jason.art3mis;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -33,35 +32,39 @@ public class ViewFilesActivity extends AppCompatActivity {
 		csvReadWrite = new CsvReadWrite(baseDir);
 		
 		String[] files = this.fileList();
-		if (files.length == 0) {
+		System.out.println(Arrays.toString(files));
+		
+		ArrayList<String> actual_files = new ArrayList<>();
+		for (String class_name: files) {
+			if (class_name.contains(".csv")) {
+				actual_files.add(class_name.replaceAll(".csv",""));
+			}
+		}
+		
+		
+		if (actual_files.size() == 0) {
 			tv_choose_file.setText(R.string.no_files);
+			// TODO: Add button to go make a new file (make a new onClick override method)
 		}
 		else {
-			for (String class_name: files) {
-				if (class_name.contains(".csv")) {
-					System.out.println(class_name);
-					class_name = class_name.replaceAll(".csv","");
-					System.out.println(class_name);
-					
-					final LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT);
-					
-					Button button = new Button(this);
-					button.setText(class_name);
-					button.setLayoutParams(params1);
-					button.setGravity(Gravity.CENTER);
-					button.setOnClickListener(overrideOnClick(button, class_name));
-					
-					ll_file_buttons.addView(button);
-				}
+			for (String class_name: actual_files) {
+				final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.WRAP_CONTENT);
+				
+				Button button = new Button(this);
+				button.setText(class_name);
+				button.setLayoutParams(params);
+				button.setGravity(Gravity.CENTER);
+				button.setOnClickListener(overrideOnClick(class_name));
+				
+				ll_file_buttons.addView(button);
 			}
 		}
 		
 	}
 	
-	
-	View.OnClickListener overrideOnClick(final Button button, final String class_name)  {
+	View.OnClickListener overrideOnClick(final String class_name)  {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				ArrayList<String[]> arrayList = csvReadWrite.readCsvFromStorage(class_name);
@@ -80,13 +83,11 @@ public class ViewFilesActivity extends AppCompatActivity {
 	}
 	
 	public void startIntent(ArrayList<String[]> arrList) {
-		Context context = this;
-		Class targetClass = FileOptionsActivity.class;
-		Intent intent = new Intent(context, targetClass);
+		Intent intent = new Intent(this, FileOptionsActivity.class);
 		intent.putExtra("Arraylist", arrList);
 		startActivity(intent);
 	}
 	
-	
+	// TODO: Implement delete function
 	
 }

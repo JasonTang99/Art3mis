@@ -20,11 +20,11 @@ import java.util.Arrays;
 public class NewInputActivity extends AppCompatActivity {
 	
 	int totalHeight;
-	int totalWidth;
 	ScrollViewWithMaxHeight sv_with_max;
 	EditText et_course_name;
 	Button b_work;
 	LinearLayout ll_scroll;
+	
 	String baseDir;
 	CsvReadWrite csvReadWrite;
 	
@@ -33,22 +33,21 @@ public class NewInputActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_input);
 		
-		sv_with_max = findViewById(R.id.scroll_view_max_height);
-		et_course_name = findViewById(R.id.course_name);
-		b_work = findViewById(R.id.add_work_button);
-		ll_scroll = findViewById(R.id.scrolling_layout);
-		
-		int etHeight = et_course_name.getHeight();
-		int b_work_height = b_work.getHeight();
-		totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
-		totalWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
-		
-		sv_with_max.setMaxHeight(totalHeight - etHeight - b_work_height);
-		
-		moreAssignments();
-		
 		baseDir = this.getFilesDir().toString();
 		csvReadWrite = new CsvReadWrite(baseDir);
+		
+		et_course_name = findViewById(R.id.course_name);
+		sv_with_max = findViewById(R.id.scroll_view_max_height);
+		ll_scroll = findViewById(R.id.scrolling_layout);
+		b_work = findViewById(R.id.add_work);
+		
+		int et_Height = et_course_name.getHeight();
+		int b_work_height = b_work.getHeight();
+		totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
+		
+		sv_with_max.setMaxHeight(totalHeight - et_Height - b_work_height);
+		
+		moreAssignments();
 		
 	}
 	
@@ -65,6 +64,7 @@ public class NewInputActivity extends AppCompatActivity {
 			case R.id.action_bar_done:
 				// Gets the activity view
 				write(findViewById(android.R.id.content));
+				// TODO: Add somewhere to go after done
 				return true;
 			
 			default:
@@ -83,11 +83,6 @@ public class NewInputActivity extends AppCompatActivity {
 			LinearLayout.LayoutParams.MATCH_PARENT,
 			LinearLayout.LayoutParams.WRAP_CONTENT);
 		
-		LinearLayout scrollingAssignments = ll_scroll;
-		
-		LinearLayout newAssignment = new LinearLayout(this);
-		newAssignment.setLayoutParams(params);
-		
 		LinearLayout.LayoutParams paramName = new LinearLayout.LayoutParams(
 			0,
 			ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -98,6 +93,8 @@ public class NewInputActivity extends AppCompatActivity {
 			ViewGroup.LayoutParams.WRAP_CONTENT);
 		paramWeight.weight = 35;
 		
+		LinearLayout newAssignment = new LinearLayout(this);
+		newAssignment.setLayoutParams(params);
 		
 		EditText assignmentName = new EditText(this);
 		assignmentName.setHint(R.string.work);
@@ -117,7 +114,7 @@ public class NewInputActivity extends AppCompatActivity {
 		newAssignment.addView(assignmentName);
 		newAssignment.addView(assignmentWeight);
 		
-		scrollingAssignments.addView(newAssignment);
+		ll_scroll.addView(newAssignment);
 		
 		
 		
@@ -166,13 +163,13 @@ public class NewInputActivity extends AppCompatActivity {
 				assignmentNames.add(str_assignment_name);
 				assignmentWeights.add(str_assignment_weight);
 			}
-			// Name is filled but weight isnt
+			// Name is filled but weight isn't
 			else if (!str_assignment_name.equals("") && str_assignment_weight.equals("")) {
 				properFormat = false;
 				Toast.makeText(this,"Weight isn't filled in", Toast.LENGTH_SHORT).show();
 				// TODO: add in highlighting
 			}
-			// Weight is filled but name isnt
+			// Weight is filled but name isn't
 			else if (str_assignment_name.equals("") && !str_assignment_weight.equals("")) {
 				properFormat = false;
 				Toast.makeText(this,"Name isn't filled in", Toast.LENGTH_SHORT).show();
@@ -218,24 +215,6 @@ public class NewInputActivity extends AppCompatActivity {
 		ArrayList<String[]> testArrays = getSyllabusArray(v);
 		if (testArrays != null) {
 			csvReadWrite.writeCsvToStorage(testArrays);
-		}
-	}
-	
-	public void read(View v) {
-		// courseName is a string not a string[] here
-		String courseName = et_course_name.getText().toString();
-		if (courseName.equals("")) {
-			Toast.makeText(this,"Enter a course name", Toast.LENGTH_SHORT).show();
-		}
-		else {
-			ArrayList<String[]> arrayList = csvReadWrite.readCsvFromStorage(courseName);
-			String txt =
-				Arrays.toString(arrayList.get(0)) + "\n"
-					+ Arrays.toString(arrayList.get(1)) + "\n"
-					+ Arrays.toString(arrayList.get(2)) + "\n"
-					+ Arrays.toString(arrayList.get(3));
-			
-			System.out.println(txt);
 		}
 	}
 	

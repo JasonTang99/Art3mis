@@ -34,7 +34,7 @@
     android:layout_gravity="center"
     android:text="@string/add_work"
     android:onClick="addAssignment"
-    android:id="@+id/add_work_button"
+    android:id="@+id/add_work"
     />
 
 </LinearLayout>

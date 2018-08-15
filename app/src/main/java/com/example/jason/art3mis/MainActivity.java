@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     startActivity(intent);
   }
   
+  
+//  UNUSED METHODS THAT MIGHT BE USEFUL LATER
+
 //  public void showPath(View v) {
 //    Button button = findViewById(R.id.button);
 //    File dir = this.getFilesDir();
@@ -72,32 +75,32 @@ public class MainActivity extends AppCompatActivity {
 //  }
 
 
-  public static boolean isNum(String input) {
-    return input.matches("[\\d\\.\\/]*");
-  }
-
-  public static double toDecimal(String input) {
-    System.out.println(input);
-
-    if ( !isNum(input) ) {
-      System.out.println("Check that you entered the number correctly!");
-      return -1.0;
-    }
-    else {
-      if (input.contains("/")) {
-        String[] splt = input.split("/");
-        if (splt.length > 2) {
-          System.out.println("You have too many fractions! Try again");
-          return -1.0;
-        }
-        else {
-          return Double.parseDouble(splt[0]) / Double.parseDouble(splt[1]);
-        }
-      }
-      else {
-        return Double.parseDouble(input);
-      }
-    }
-  }
+//  public static boolean isNum(String input) {
+//    return input.matches("[\\d\\.\\/]*");
+//  }
+//
+//  public static double toDecimal(String input) {
+//    System.out.println(input);
+//
+//    if ( !isNum(input) ) {
+//      System.out.println("Check that you entered the number correctly!");
+//      return -1.0;
+//    }
+//    else {
+//      if (input.contains("/")) {
+//        String[] splt = input.split("/");
+//        if (splt.length > 2) {
+//          System.out.println("You have too many fractions! Try again");
+//          return -1.0;
+//        }
+//        else {
+//          return Double.parseDouble(splt[0]) / Double.parseDouble(splt[1]);
+//        }
+//      }
+//      else {
+//        return Double.parseDouble(input);
+//      }
+//    }
+//  }
   
 }
