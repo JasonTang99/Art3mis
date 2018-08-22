@@ -44,7 +44,10 @@ public class ViewFilesActivity extends AppCompatActivity {
 		
 		if (actual_files.size() == 0) {
 			tv_choose_file.setText(R.string.no_files);
-			// TODO: Add button to go make a new file (make a new onClick override method)
+			Button b_new_input = new Button(this);
+			ll_file_buttons.addView(b_new_input);
+			b_new_input.setText("Make a new file");
+			b_new_input.setOnClickListener(overrideOnClickNewFile());
 		}
 		else {
 			for (String class_name: actual_files) {
@@ -68,24 +71,27 @@ public class ViewFilesActivity extends AppCompatActivity {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				ArrayList<String[]> arrayList = csvReadWrite.readCsvFromStorage(class_name);
-				String txt =
-					Arrays.toString(arrayList.get(0)) + "\n"
-						+ Arrays.toString(arrayList.get(1)) + "\n"
-						+ Arrays.toString(arrayList.get(2)) + "\n"
-						+ Arrays.toString(arrayList.get(3));
-
-				System.out.println(txt);
-				
-				startIntent(arrayList);
-				
+				startIntentMain(arrayList);
 			}
 		};
 	}
 	
-	public void startIntent(ArrayList<String[]> arrList) {
+	View.OnClickListener overrideOnClickNewFile()  {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				startIntentNewInput();
+			}
+		};
+	}
+	
+	public void startIntentMain(ArrayList<String[]> arrList) {
 		Intent intent = new Intent(this, FileOptionsActivity.class);
 		intent.putExtra("Arraylist", arrList);
 		startActivity(intent);
+	}
+	
+	public void startIntentNewInput() {
+		startActivity(new Intent(this, NewInputActivity.class));
 	}
 	
 	// TODO: Implement delete function

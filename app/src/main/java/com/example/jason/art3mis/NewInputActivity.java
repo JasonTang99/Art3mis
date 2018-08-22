@@ -1,5 +1,6 @@
 package com.example.jason.art3mis;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -63,10 +64,12 @@ public class NewInputActivity extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case R.id.action_bar_done:
 				// Gets the activity view
-				write(findViewById(android.R.id.content));
-				// TODO: Add somewhere to go after done
-				return true;
-			
+				View content = findViewById(android.R.id.content);
+				boolean flag = write(content);
+				if (flag) {
+					Intent intent = new Intent(this, MainActivity.class);
+					startActivity(intent);
+				}
 			default:
 				return super.onOptionsItemSelected(item);
 			
@@ -211,11 +214,13 @@ public class NewInputActivity extends AppCompatActivity {
 		}
 	}
 	
-	public void write(View v) {
+	public boolean write(View v) {
 		ArrayList<String[]> testArrays = getSyllabusArray(v);
 		if (testArrays != null) {
 			csvReadWrite.writeCsvToStorage(testArrays);
+			return true;
 		}
+		return false;
 	}
 	
 	

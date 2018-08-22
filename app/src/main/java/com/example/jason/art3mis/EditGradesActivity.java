@@ -1,5 +1,6 @@
 package com.example.jason.art3mis;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -61,10 +62,11 @@ public class EditGradesActivity extends AppCompatActivity {
 		switch (item.getItemId()) {
 			case R.id.action_bar_done:
 				// Gets the activity view
-				write(findViewById(android.R.id.content));
-				// TODO: Add somewhere to go after done
-				return true;
-			
+				View content = findViewById(android.R.id.content);
+				write(content);
+				Intent intent = new Intent(this, FileOptionsActivity.class);
+				intent.putExtra("Arraylist", sent);
+				startActivity(intent);
 			default:
 				return super.onOptionsItemSelected(item);
 			
@@ -132,8 +134,10 @@ public class EditGradesActivity extends AppCompatActivity {
 	}
 	
 	public void write(View v) {
-		ArrayList<String[]> testArrays = getGrades(v);
-		csvReadWrite.writeCsvToStorage(testArrays);
+		// Reads the new grades into "sent"
+		sent = getGrades(v);
+		// Writes sent into the storage
+		csvReadWrite.writeCsvToStorage(sent);
 	}
 	
 }
