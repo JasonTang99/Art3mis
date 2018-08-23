@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -70,8 +73,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 	View.OnClickListener overrideOnClick(final String class_name)  {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
-				ArrayList<String[]> arrayList = csvReadWrite.readCsvFromStorage(class_name);
-				startIntentMain(arrayList);
+				startIntentMain(csvReadWrite.readCsvFromStorage(class_name));
 			}
 		};
 	}
@@ -82,6 +84,30 @@ public class ViewFilesActivity extends AppCompatActivity {
 				startIntentNewInput();
 			}
 		};
+	}
+	
+	// Adds "Delete" to action bar
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.delete_menu, menu);
+		return true;
+	}
+	
+	// Adds "Delete" to action bar
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_bar_delete:
+				for (int a = 0; a < ll_file_buttons.getChildCount(); a++) {
+					Button button = (Button) ll_file_buttons.getChildAt(a);
+					button.setText(R.string.del + button.getText().toString());
+					// TODO: Start work here, make new overide button and change "delete files" into "View Files"
+				}
+			default:
+				return super.onOptionsItemSelected(item);
+			
+		}
 	}
 	
 	public void startIntentMain(ArrayList<String[]> arrList) {
@@ -95,5 +121,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 	}
 	
 	// TODO: Implement delete function
+	
+	
 	
 }

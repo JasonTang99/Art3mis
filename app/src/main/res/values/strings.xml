@@ -21,6 +21,8 @@
   <string name="what_grade">Desired Final Grade</string>
 
   <string name="done">Done</string>
+  <string name="delete">Delete Files</string>
+  <string name="del">Delete </string>
 
 
 </resources>
