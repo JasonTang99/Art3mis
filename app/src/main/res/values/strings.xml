@@ -22,7 +22,7 @@
 
   <string name="done">Done</string>
   <string name="delete">Delete Files</string>
-  <string name="del">Delete </string>
+  <string name="view_files">View Files</string>
 
 
 </resources>

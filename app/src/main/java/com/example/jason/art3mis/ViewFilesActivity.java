@@ -23,6 +23,8 @@ public class ViewFilesActivity extends AppCompatActivity {
 	String baseDir;
 	CsvReadWrite csvReadWrite;
 	
+	Boolean deleting = true;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,6 +72,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 		
 	}
 	
+	// Gives Button with class name function to open that class
 	View.OnClickListener overrideOnClick(final String class_name)  {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
@@ -78,6 +81,16 @@ public class ViewFilesActivity extends AppCompatActivity {
 		};
 	}
 	
+	// Turns Class Button to Delete
+	View.OnClickListener overrideOnClickDelete(final String class_name)  {
+		return new View.OnClickListener() {
+			public void onClick(View v) {
+				deleteClass(class_name);
+			}
+		};
+	}
+	
+	// Gives Button when there are no classes function to create a new class
 	View.OnClickListener overrideOnClickNewFile()  {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
@@ -99,14 +112,31 @@ public class ViewFilesActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.action_bar_delete:
-				for (int a = 0; a < ll_file_buttons.getChildCount(); a++) {
-					Button button = (Button) ll_file_buttons.getChildAt(a);
-					button.setText(R.string.del + button.getText().toString());
-					// TODO: Start work here, make new overide button and change "delete files" into "View Files"
+				if (deleting) {
+					for (int a = 1; a < ll_file_buttons.getChildCount(); a++) {
+						Button button = (Button) ll_file_buttons.getChildAt(a);
+						String className = button.getText().toString();
+						
+						button.setText("Delete " + className);
+						button.setOnClickListener(overrideOnClickDelete(className));
+					}
+					item.setTitle(R.string.view_files);
+					deleting = false;
 				}
+				else {
+					for (int a = 1; a < ll_file_buttons.getChildCount(); a++) {
+						Button button = (Button) ll_file_buttons.getChildAt(a);
+						String className = button.getText().toString().substring(7);
+						
+						button.setText(className);
+						button.setOnClickListener(overrideOnClick(className));
+					}
+					item.setTitle(R.string.delete);
+					deleting = true;
+				}
+				
 			default:
 				return super.onOptionsItemSelected(item);
-			
 		}
 	}
 	
@@ -120,7 +150,11 @@ public class ViewFilesActivity extends AppCompatActivity {
 		startActivity(new Intent(this, NewInputActivity.class));
 	}
 	
-	// TODO: Implement delete function
+	public void deleteClass(String className) {
+		this.deleteFile(className + ".csv");
+		// TODO: Add in Dialog Confirmation Box
+		this.recreate();
+	}
 	
 	
 	
