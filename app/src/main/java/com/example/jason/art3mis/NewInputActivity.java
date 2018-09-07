@@ -106,7 +106,7 @@ public class NewInputActivity extends AppCompatActivity {
 		EditText assignmentWeight = new EditText(this);
 		assignmentWeight.setHint(R.string.worth);
 		assignmentWeight.setLayoutParams(paramWeight);
-		assignmentWeight.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		assignmentWeight.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 		
 		// TODO: Allow fractional input
 //		assignmentWeight.setKeyListener(DigitsKeyListener.getInstance("0123456789./-"));
@@ -120,7 +120,6 @@ public class NewInputActivity extends AppCompatActivity {
 		ll_scroll.addView(newAssignment);
 		
 		
-		
 		// Scrolls to the bottom of the ScrollView
 		final ScrollViewWithMaxHeight sc = sv_with_max;
 		sc.post(new Runnable() {
@@ -132,7 +131,7 @@ public class NewInputActivity extends AppCompatActivity {
 		
 	}
 	
-	public ArrayList<String[]> getSyllabusArray(View v){
+	public ArrayList<String[]> getSyllabusArray(View v) {
 		// Returns null if improperly formatted
 		// TODO 4: Add highlighting for error fields (Notify user of errors)
 		
@@ -154,7 +153,7 @@ public class NewInputActivity extends AppCompatActivity {
 		
 		for (int i = 0; i < numChildren; i++) {
 			LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(i);
-
+			
 			EditText et_assignment_name = (EditText) ll_inner.getChildAt(0);
 			EditText et_assignment_weight = (EditText) ll_inner.getChildAt(1);
 			
@@ -169,13 +168,13 @@ public class NewInputActivity extends AppCompatActivity {
 			// Name is filled but weight isn't
 			else if (!str_assignment_name.equals("") && str_assignment_weight.equals("")) {
 				properFormat = false;
-				Toast.makeText(this,"Weight isn't filled in", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Weight isn't filled in", Toast.LENGTH_SHORT).show();
 				// TODO: add in highlighting
 			}
 			// Weight is filled but name isn't
 			else if (str_assignment_name.equals("") && !str_assignment_weight.equals("")) {
 				properFormat = false;
-				Toast.makeText(this,"Name isn't filled in", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Name isn't filled in", Toast.LENGTH_SHORT).show();
 				// TODO: add in highlighting
 			}
 		}
@@ -184,7 +183,7 @@ public class NewInputActivity extends AppCompatActivity {
 		if (assignmentNames.size() == 0 || assignmentWeights.size() == 0) {
 			// TODO: add in highlighting
 			properFormat = false;
-			Toast.makeText(this,"Fill in at least one assignment", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Fill in at least one assignment", Toast.LENGTH_SHORT).show();
 			
 		}
 		String[] lst_names = assignmentNames.toArray(new String[0]);
@@ -194,7 +193,7 @@ public class NewInputActivity extends AppCompatActivity {
 		if (!listOf100(lst_weights)) {
 			// TODO: add in highlighting
 			properFormat = false;
-			Toast.makeText(this,"This doesn't add up to 100", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "This doesn't add up to 100", Toast.LENGTH_SHORT).show();
 		}
 		
 		sent.add(lst_names);
@@ -208,8 +207,7 @@ public class NewInputActivity extends AppCompatActivity {
 		
 		if (properFormat) {
 			return sent;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -227,7 +225,7 @@ public class NewInputActivity extends AppCompatActivity {
 	public boolean listOf100(String[] lst) {
 		// Checks if the list adds up to 100
 		double sum = 0.0;
-		for (String item: lst) {
+		for (String item : lst) {
 			sum += Double.parseDouble(item);
 		}
 		return sum == 100.0;

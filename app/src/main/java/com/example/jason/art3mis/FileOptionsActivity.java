@@ -21,7 +21,7 @@ public class FileOptionsActivity extends AppCompatActivity {
 	String[] assignmentWeights;
 	String[] grades;
 	
-	DecimalFormat df = new DecimalFormat("#.####");
+	DecimalFormat df = new DecimalFormat("#.##");
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,17 @@ public class FileOptionsActivity extends AppCompatActivity {
 		
 		setContentView(R.layout.activity_file_options);
 		
+		
 	}
 	
 	public void openGrades(View v) {
 		Intent intent = new Intent(this, EditGradesActivity.class);
 		intent.putExtra("Arraylist", sent);
+		startActivity(intent);
+	}
+	
+	public void openHome(View v) {
+		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
 	
@@ -131,7 +137,7 @@ public class FileOptionsActivity extends AppCompatActivity {
 		}
 		else {
 			double howMuch = (final_grade - total_grade) * 100 / Double.parseDouble(assignmentWeights[missing_index]);
-			String msg = "You need " + howMuch + " on your " + assignmentNames[missing_index] + " to get a final mark of " + final_grade;
+			String msg = "You need " + df.format(howMuch) + " on " + assignmentNames[missing_index] + " to get a final mark of " + df.format(final_grade);
 			System.out.println(msg);
 			TextView tv_how_much = findViewById(R.id.tv_how_much);
 			tv_how_much.setText(msg);

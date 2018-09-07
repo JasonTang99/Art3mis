@@ -99,7 +99,7 @@ public class EditGradesActivity extends AppCompatActivity {
 			
 			EditText et_grade = new EditText(this);
 			et_grade.setLayoutParams(paramGrade);
-			et_grade.setInputType(InputType.TYPE_CLASS_NUMBER);
+			et_grade.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 			et_grade.setSingleLine();
 			
 			// Adds in grade if its available

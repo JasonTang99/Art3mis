@@ -1,7 +1,7 @@
 <resources>
   <string name="app_name">Art3mis</string>
 
-  <string name="home_link">Link to my Home Page</string>
+  <string name="home">Go Back Home</string>
   <string name="new_class">Create New Class</string>
   <string name="view_classes">View Existing Classes</string>
   <string name="contact">Contact Me</string>

@@ -40,9 +40,9 @@ public class ViewFilesActivity extends AppCompatActivity {
 		System.out.println(Arrays.toString(files));
 		
 		ArrayList<String> actual_files = new ArrayList<>();
-		for (String class_name: files) {
+		for (String class_name : files) {
 			if (class_name.contains(".csv")) {
-				actual_files.add(class_name.replaceAll(".csv",""));
+				actual_files.add(class_name.replaceAll(".csv", ""));
 			}
 		}
 		
@@ -53,9 +53,8 @@ public class ViewFilesActivity extends AppCompatActivity {
 			ll_file_buttons.addView(b_new_input);
 			b_new_input.setText("Make a new file");
 			b_new_input.setOnClickListener(overrideOnClickNewFile());
-		}
-		else {
-			for (String class_name: actual_files) {
+		} else {
+			for (String class_name : actual_files) {
 				final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -73,7 +72,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 	}
 	
 	// Gives Button with class name function to open that class
-	View.OnClickListener overrideOnClick(final String class_name)  {
+	View.OnClickListener overrideOnClick(final String class_name) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				startIntentMain(csvReadWrite.readCsvFromStorage(class_name));
@@ -82,7 +81,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 	}
 	
 	// Turns Class Button to Delete
-	View.OnClickListener overrideOnClickDelete(final String class_name)  {
+	View.OnClickListener overrideOnClickDelete(final String class_name) {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				deleteClass(class_name);
@@ -91,7 +90,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 	}
 	
 	// Gives Button when there are no classes function to create a new class
-	View.OnClickListener overrideOnClickNewFile()  {
+	View.OnClickListener overrideOnClickNewFile() {
 		return new View.OnClickListener() {
 			public void onClick(View v) {
 				startIntentNewInput();
@@ -122,8 +121,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 					}
 					item.setTitle(R.string.view_files);
 					deleting = false;
-				}
-				else {
+				} else {
 					for (int a = 1; a < ll_file_buttons.getChildCount(); a++) {
 						Button button = (Button) ll_file_buttons.getChildAt(a);
 						String className = button.getText().toString().substring(7);
@@ -134,7 +132,7 @@ public class ViewFilesActivity extends AppCompatActivity {
 					item.setTitle(R.string.delete);
 					deleting = true;
 				}
-				
+			
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -155,7 +153,6 @@ public class ViewFilesActivity extends AppCompatActivity {
 		// TODO: Add in Dialog Confirmation Box
 		this.recreate();
 	}
-	
 	
 	
 }

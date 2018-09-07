@@ -1,6 +1,7 @@
 package com.example.jason.art3mis;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,44 +9,50 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 	
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    
-
-    if (savedInstanceState != null) {
-      // do stuff
-    }
-    setContentView(R.layout.activity_main);
-  }
-  
-  @Override
-  public void onRestoreInstanceState(Bundle savedInstanceState) {
-    // do more stuff, runs after onCreate and only if there's a save state
-    super.onRestoreInstanceState(savedInstanceState);
-  }
-  
-  public void onSaveInstanceState(Bundle outState) {
-    // outState.putString();
-    
-    // call superclass to save any view hierarchy
-    super.onSaveInstanceState(outState);
-  }
-  
-
 	
-  public void openNewFile(View v) {
-    Intent intent = new Intent(this, NewInputActivity.class);
-    startActivity(intent);
-  }
-  
-  public void openExisting(View v) {
-    Intent intent = new Intent(this, ViewFilesActivity.class);
-    startActivity(intent);
-  }
-  
-  
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		
+		if (savedInstanceState != null) {
+			// do stuff
+		}
+		setContentView(R.layout.activity_main);
+	}
+	
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		// do more stuff, runs after onCreate and only if there's a save state
+		super.onRestoreInstanceState(savedInstanceState);
+	}
+	
+	public void onSaveInstanceState(Bundle outState) {
+		// outState.putString();
+		
+		// call superclass to save any view hierarchy
+		super.onSaveInstanceState(outState);
+	}
+	
+	
+	public void openNewFile(View v) {
+		Intent intent = new Intent(this, NewInputActivity.class);
+		startActivity(intent);
+	}
+	
+	public void openExisting(View v) {
+		Intent intent = new Intent(this, ViewFilesActivity.class);
+		startActivity(intent);
+	}
+	
+	public void openContact(View v) {
+		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:1999jasontang@gmail.com"));
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "About Art3mis App");
+		
+		startActivity(Intent.createChooser(emailIntent, "Email Me"));
+	}
+
+
 //  UNUSED METHODS THAT MIGHT BE USEFUL LATER
 
 //  public void showPath(View v) {
@@ -102,5 +109,5 @@ public class MainActivity extends AppCompatActivity {
 //      }
 //    }
 //  }
-  
+
 }
