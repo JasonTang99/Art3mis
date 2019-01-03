@@ -1,4 +1,4 @@
-# Art3mis - A Java Based Android App
+# HowMuchDoINeed - A Java Based Android App
 
 ## What's it used for
 
