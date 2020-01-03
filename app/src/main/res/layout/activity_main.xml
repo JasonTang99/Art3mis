@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
   <Button
       android:id="@+id/b_new_file"
       android:layout_width="wrap_content"

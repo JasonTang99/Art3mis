@@ -12,7 +12,7 @@
     android:hint="@string/course"
     android:inputType="textCapCharacters" />
 
-  <com.example.jason.art3mis.ScrollViewWithMaxHeight
+  <com.example.howmuchdoineed.ScrollViewWithMaxHeight
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/scroll_view_max_height"
@@ -24,7 +24,7 @@
       android:orientation="vertical">
     </LinearLayout>
 
-  </com.example.jason.art3mis.ScrollViewWithMaxHeight>
+  </com.example.howmuchdoineed.ScrollViewWithMaxHeight>
 
 
   <Button

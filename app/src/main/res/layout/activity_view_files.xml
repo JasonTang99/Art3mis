@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:id="@+id/ll_file_buttons"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_file_buttons"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
   <TextView
-    android:id="@+id/tv_choose_file"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:text="@string/choose_file"
-    android:textAlignment="center"
-    android:textSize="22sp" />
+      android:id="@+id/tv_choose_file"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/choose_file"
+      android:textAlignment="center"
+      android:textSize="22sp" />
+
 </LinearLayout>
+
+<!--<LinearLayout xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:id="@+id/ll_file_buttons"-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+<!--<TextView-->
+<!--    android:id="@+id/tv_choose_file"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_gravity="center"-->
+<!--    android:text="@string/choose_file"-->
+<!--    android:textAlignment="center"-->
+<!--    android:textSize="22sp" />-->
+<!--</LinearLayout>-->

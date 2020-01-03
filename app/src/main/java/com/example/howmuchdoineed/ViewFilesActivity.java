@@ -24,7 +24,6 @@ public class ViewFilesActivity extends AppCompatActivity {
 
     String baseDir;
     CsvReadWrite csvReadWrite;
-
     Boolean deleting = true;
 
     @Override
@@ -47,7 +46,6 @@ public class ViewFilesActivity extends AppCompatActivity {
                 actual_files.add(class_name.replaceAll(".csv", ""));
             }
         }
-
 
         if (actual_files.size() == 0) {
             tv_choose_file.setText(R.string.no_files);
@@ -76,8 +74,7 @@ public class ViewFilesActivity extends AppCompatActivity {
     // Gives Button with class name function to open that class
     View.OnClickListener overrideOnClick(final String class_name) {
         return new View.OnClickListener() {
-            public void onClick(View v) {
-                startIntentMain(csvReadWrite.readCsvFromStorage(class_name));
+            public void onClick(View v) {startIntentMain(csvReadWrite.readCsvFromStorage(class_name));
             }
         };
     }
