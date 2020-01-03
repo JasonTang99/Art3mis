@@ -2,105 +2,152 @@ package com.example.howmuchdoineed;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
-import android.net.Uri;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+    TextView tv_choose_file;
+    LinearLayout ll_files;
+
+    String baseDir;
+    CsvReadWrite csvReadWrite;
+    Boolean deleting = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_view_files);
+
+        tv_choose_file = findViewById(R.id.tv_choose_file);
+        ll_files = findViewById(R.id.ll_files);
+
+        baseDir = this.getFilesDir().toString();
+        csvReadWrite = new CsvReadWrite(baseDir);
+
+        ArrayList<String> files = new ArrayList<>();
+        for (String class_name : this.fileList()) {
+            if (class_name.contains(".csv")) {
+                files.add(class_name.replaceAll(".csv", ""));
+            }
+        }
+
+        if (files.size() == 0) {
+            tv_choose_file.setText(R.string.no_files);
+            Button b_new_input = new Button(this);
+            ll_files.addView(b_new_input);
+            b_new_input.setText(R.string.new_file);
+            b_new_input.setOnClickListener(overrideOnClickNewFile());
+        } else {
+
+            final LinearLayout.LayoutParams b_params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            final LinearLayout.LayoutParams v_params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            for (String class_name : files) {
+                Button button = new Button(this);
+                button.setText(class_name);
+                button.setLayoutParams(b_params);
+                button.setGravity(Gravity.CENTER);
+                button.setOnClickListener(overrideOnClick(class_name));
+
+                ll_files.addView(button);
+
+//                View view = new View(this);
+//                view.setStyle
+//                <View
+//                android:layout_width="match_parent"
+//                android:layout_height="1dp"
+//                android:background="@android:color/darker_gray"/>
+            }
+
+
+        }
+
     }
 
+    // Gives Button with class name function to open that class
+    View.OnClickListener overrideOnClick(final String class_name) {
+        return v -> startIntentMain(csvReadWrite.readCsvFromStorage(class_name));
+    }
+
+    // Turns Class Button to Delete
+    View.OnClickListener overrideOnClickDelete(final String class_name) {
+        return v -> deleteClass(class_name);
+    }
+
+    // Gives Button when there are no classes function to create a new class
+    View.OnClickListener overrideOnClickNewFile() {
+        return v -> startIntentNewInput();
+    }
+
+    // Adds "Delete" to action bar
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        // do more stuff, runs after onCreate and only if there's a save state
-        super.onRestoreInstanceState(savedInstanceState);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.delete_menu, menu);
+        return true;
     }
 
-    public void onSaveInstanceState(Bundle outState) {
-        // outState.putString();
+    // Adds "Delete" to action bar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_bar_delete:
+                if (deleting) {
+                    for (int a = 1; a < ll_files.getChildCount(); a++) {
+                        Button button = (Button) ll_files.getChildAt(a);
+                        String className = button.getText().toString();
 
-        // call superclass to save any view hierarchy
-        super.onSaveInstanceState(outState);
+                        button.setText("Delete " + className);
+                        button.setOnClickListener(overrideOnClickDelete(className));
+                    }
+                    item.setTitle(R.string.view_files);
+                    deleting = false;
+                } else {
+                    for (int a = 1; a < ll_files.getChildCount(); a++) {
+                        Button button = (Button) ll_files.getChildAt(a);
+                        String className = button.getText().toString().substring(7);
+
+                        button.setText(className);
+                        button.setOnClickListener(overrideOnClick(className));
+                    }
+                    item.setTitle(R.string.delete);
+                    deleting = true;
+                }
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
-
-    public void openNewFile(View v) {
-        Intent intent = new Intent(this, NewInputActivity.class);
+    public void startIntentMain(ArrayList<String[]> arrList) {
+        Intent intent = new Intent(this, FileOptionsActivity.class);
+        intent.putExtra("Arraylist", arrList);
         startActivity(intent);
     }
 
-    public void openExisting(View v) {
-        Intent intent = new Intent(this, ViewFilesActivity.class);
-        startActivity(intent);
+    public void startIntentNewInput() {
+        startActivity(new Intent(this, NewInputActivity.class));
     }
 
-    public void openContact(View v) {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:1999jasontang@gmail.com"));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "About Art3mis App");
-
-        startActivity(Intent.createChooser(emailIntent, "Email Me"));
+    public void deleteClass(String className) {
+        this.deleteFile(className + ".csv");
+        // TODO: Add in Dialog Confirmation Box
+        this.recreate();
     }
-
-
-//  UNUSED METHODS THAT MIGHT BE USEFUL LATER
-
-//  public void showPath(View v) {
-//    Button button = findViewById(R.id.button);
-//    File dir = this.getFilesDir();
-//    String dirString = dir.toString();
-//    button.setText(dirString);
-//  }
-//
-// public void openHomePage(View v) {
-//    String url = "https://1999jasontang.github.io/";
-//    Uri parsedUri = Uri.parse(url);
-//    Intent mIntent = new Intent(Intent.ACTION_VIEW, parsedUri);
-//    if (mIntent.resolveActivity(getPackageManager()) != null ) {
-//      startActivity(mIntent);
-//    }
-//  }
-//
-//  public void shareText(View v) {
-//    String mimeType = "text/plain";
-//    String title = "Share my site";
-//    ShareCompat.IntentBuilder.from(this)
-//      .setChooserTitle(title)
-//      .setType(mimeType)
-//      .setText("https://1999jasontang.github.io/")
-//      .startChooser();
-//  }
-
-
-//  public static boolean isNum(String input) {
-//    return input.matches("[\\d\\.\\/]*");
-//  }
-//
-//  public static double toDecimal(String input) {
-//    System.out.println(input);
-//
-//    if ( !isNum(input) ) {
-//      System.out.println("Check that you entered the number correctly!");
-//      return -1.0;
-//    }
-//    else {
-//      if (input.contains("/")) {
-//        String[] splt = input.split("/");
-//        if (splt.length > 2) {
-//          System.out.println("You have too many fractions! Try again");
-//          return -1.0;
-//        }
-//        else {
-//          return Double.parseDouble(splt[0]) / Double.parseDouble(splt[1]);
-//        }
-//      }
-//      else {
-//        return Double.parseDouble(input);
-//      }
-//    }
-//  }
 
 }

@@ -10,14 +10,10 @@
 
   <Button
       android:id="@+id/b_new_file"
-      android:layout_width="wrap_content"
+      android:layout_width="200dp"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="8dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginLeft="8dp"
-      android:layout_marginRight="8dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="8dp"
+      android:layout_margin="8dp"
+      style="@style/Widget.AppCompat.Button.Borderless"
       android:onClick="openNewFile"
       android:text="@string/new_class"
       android:textSize="15sp"
@@ -29,14 +25,14 @@
 
   <Button
       android:id="@+id/b_view_files"
-      android:layout_width="wrap_content"
+      android:layout_width="200dp"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="8dp"
-      android:layout_marginEnd="8dp"
-      android:layout_marginLeft="8dp"
-      android:layout_marginRight="8dp"
       android:layout_marginStart="8dp"
+      android:layout_marginLeft="8dp"
       android:layout_marginTop="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginBottom="8dp"
       android:onClick="openExisting"
       android:text="@string/view_classes"
       android:textSize="15sp"
@@ -48,7 +44,7 @@
 
   <Button
       android:id="@+id/b_contacts"
-      android:layout_width="wrap_content"
+      android:layout_width="200dp"
       android:layout_height="wrap_content"
       android:layout_marginBottom="8dp"
       android:layout_marginEnd="8dp"

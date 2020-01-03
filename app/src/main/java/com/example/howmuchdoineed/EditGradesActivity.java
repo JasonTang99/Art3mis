@@ -18,28 +18,24 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class EditGradesActivity extends AppCompatActivity {
+    LinearLayout ll_grades;
 
+    String baseDir;
+    CsvReadWrite csvReadWrite;
     ArrayList<String[]> sent;
     String[] courseName;
     String[] assignmentNames;
     String[] assignmentWeights;
     String[] grades;
 
-    LinearLayout ll_grades;
-
-    String baseDir;
-    CsvReadWrite csvReadWrite;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_grades);
 
-        // Get Writer and Reader
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
 
-        // Get intent extras
         sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
         courseName = sent.get(0);
         assignmentNames = sent.get(1);
