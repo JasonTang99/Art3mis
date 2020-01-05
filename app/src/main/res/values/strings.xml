@@ -25,5 +25,8 @@
   <string name="delete">Delete Files</string>
   <string name="view_files">View Files</string>
 
+  <string name="ic_add">Add Class</string>
+  <string name="ic_del">Delete Class</string>
+
 
 </resources>

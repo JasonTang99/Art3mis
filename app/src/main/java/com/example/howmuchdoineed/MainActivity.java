@@ -1,8 +1,11 @@
 package com.example.howmuchdoineed;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,11 +13,9 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     TextView tv_choose_file;
@@ -22,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
 
     String baseDir;
     CsvReadWrite csvReadWrite;
-    Boolean deleting = true;
+    Boolean deleting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_files);
+        setContentView(R.layout.activity_main);
 
         tv_choose_file = findViewById(R.id.tv_choose_file);
         ll_files = findViewById(R.id.ll_files);
@@ -36,52 +37,33 @@ public class MainActivity extends AppCompatActivity {
         csvReadWrite = new CsvReadWrite(baseDir);
 
         ArrayList<String> files = new ArrayList<>();
-        for (String class_name : this.fileList()) {
-            if (class_name.contains(".csv")) {
+        for (String class_name : this.fileList())
+            if (class_name.contains(".csv"))
                 files.add(class_name.replaceAll(".csv", ""));
-            }
-        }
 
         if (files.size() == 0) {
             tv_choose_file.setText(R.string.no_files);
-            Button b_new_input = new Button(this);
-            ll_files.addView(b_new_input);
+
+            Button b_new_input = new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
             b_new_input.setText(R.string.new_file);
             b_new_input.setOnClickListener(overrideOnClickNewFile());
+            ll_files.addView(b_new_input);
         } else {
-
-            final LinearLayout.LayoutParams b_params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            final LinearLayout.LayoutParams v_params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-
             for (String class_name : files) {
-                Button button = new Button(this);
+                Button button= new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
                 button.setText(class_name);
-                button.setLayoutParams(b_params);
-                button.setGravity(Gravity.CENTER);
                 button.setOnClickListener(overrideOnClick(class_name));
-
                 ll_files.addView(button);
 
-//                View view = new View(this);
-//                view.setStyle
-//                <View
-//                android:layout_width="match_parent"
-//                android:layout_height="1dp"
-//                android:background="@android:color/darker_gray"/>
+                View div = new View(new ContextThemeWrapper(this, R.style.Divider), null, 0);
+                ll_files.addView(div);
             }
-
-
         }
-
     }
 
     // Gives Button with class name function to open that class
     View.OnClickListener overrideOnClick(final String class_name) {
-        return v -> startIntentMain(csvReadWrite.readCsvFromStorage(class_name));
+        return v -> startIntentClassOptions(csvReadWrite.readCsvFromStorage(class_name));
     }
 
     // Turns Class Button to Delete
@@ -98,26 +80,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.delete_menu, menu);
+        inflater.inflate(R.menu.del_add_menu, menu);
         return true;
     }
 
-    // Adds "Delete" to action bar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_bar_delete:
+            case R.id.ab_delete:
                 if (deleting) {
-                    for (int a = 1; a < ll_files.getChildCount(); a++) {
-                        Button button = (Button) ll_files.getChildAt(a);
-                        String className = button.getText().toString();
-
-                        button.setText("Delete " + className);
-                        button.setOnClickListener(overrideOnClickDelete(className));
-                    }
-                    item.setTitle(R.string.view_files);
-                    deleting = false;
-                } else {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
                         Button button = (Button) ll_files.getChildAt(a);
                         String className = button.getText().toString().substring(7);
@@ -126,15 +97,28 @@ public class MainActivity extends AppCompatActivity {
                         button.setOnClickListener(overrideOnClick(className));
                     }
                     item.setTitle(R.string.delete);
+                    deleting = false;
+                } else {
+                    for (int a = 1; a < ll_files.getChildCount(); a++) {
+                        Button button = (Button) ll_files.getChildAt(a);
+                        String className = button.getText().toString();
+
+                        button.setText("Delete " + className);
+                        button.setOnClickListener(overrideOnClickDelete(className));
+                    }
+                    item.setTitle(R.string.view_files);
                     deleting = true;
                 }
+
+            case R.id.ab_add:
+                startIntentNewInput();
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void startIntentMain(ArrayList<String[]> arrList) {
+    public void startIntentClassOptions(ArrayList<String[]> arrList) {
         Intent intent = new Intent(this, FileOptionsActivity.class);
         intent.putExtra("Arraylist", arrList);
         startActivity(intent);
@@ -145,8 +129,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteClass(String className) {
-        this.deleteFile(className + ".csv");
         // TODO: Add in Dialog Confirmation Box
+
+        final boolean[] del = new boolean[1];
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmation");
+        builder.setMessage("Do you want to delete" + className + "?");
+//        builder.setIcon(R.drawable.ic_launcher);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                del[0] = true;
+            }
+        });
+        builder.setNegativeButton("No", (dialog, id) -> dialog.dismiss());
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        System.out.println(del[0]);
+
+//        this.deleteFile(className + ".csv");
+
         this.recreate();
     }
 
