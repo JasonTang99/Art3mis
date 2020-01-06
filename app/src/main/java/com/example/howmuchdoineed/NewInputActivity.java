@@ -14,17 +14,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static java.lang.Math.abs;
+
 public class NewInputActivity extends AppCompatActivity {
 
     int totalHeight;
-    ScrollViewWithMaxHeight sv_with_max;
+    ScrollView sv;
     EditText et_course_name;
-    Button b_work;
     LinearLayout ll_scroll;
 
     String baseDir;
@@ -39,50 +41,43 @@ public class NewInputActivity extends AppCompatActivity {
         csvReadWrite = new CsvReadWrite(baseDir);
 
         et_course_name = findViewById(R.id.course_name);
-        sv_with_max = findViewById(R.id.scroll_view_max_height);
+        sv = findViewById(R.id.sv);
         ll_scroll = findViewById(R.id.scrolling_layout);
-        b_work = findViewById(R.id.add_work);
 
-        int et_Height = et_course_name.getHeight();
-        int b_work_height = b_work.getHeight();
-        totalHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
-
-        sv_with_max.setMaxHeight(totalHeight - et_Height - b_work_height);
-
-        moreAssignments();
-
+        newAssignment();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.add_done_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_bar_done:
-                // Gets the activity view
+            case R.id.ab_done:
                 View content = findViewById(android.R.id.content);
-                boolean flag = write(content);
+                boolean flag = writeClass(content);
                 if (flag) {
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }
+            case R.id.ab_add:
+                newAssignment();
+
             default:
                 return super.onOptionsItemSelected(item);
 
         }
     }
 
-    public void addAssignment(View v) {
-        moreAssignments();
-    }
+//    public void addAssignment(View v) {
+//        newAssignment();
+//    }
 
-    public void moreAssignments() {
-
+    public void newAssignment() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -122,22 +117,12 @@ public class NewInputActivity extends AppCompatActivity {
 
 
         // Scrolls to the bottom of the ScrollView
-        final ScrollViewWithMaxHeight sc = sv_with_max;
-        sc.post(new Runnable() {
-            @Override
-            public void run() {
-                sc.fullScroll(ScrollViewWithMaxHeight.FOCUS_DOWN);
-            }
-        });
-
+        final ScrollView sc = sv;
+        sc.post((Runnable) () -> sc.fullScroll(ScrollViewWithMaxHeight.FOCUS_DOWN));
     }
 
     public ArrayList<String[]> getSyllabusArray(View v) {
-        // Returns null if improperly formatted
-        // TODO 4: Add highlighting for error fields (Notify user of errors)
-
         boolean properFormat = true;
-
         ArrayList<String[]> sent = new ArrayList<>();
 
         String[] courseName = {et_course_name.getText().toString()};
@@ -155,25 +140,22 @@ public class NewInputActivity extends AppCompatActivity {
         for (int i = 0; i < numChildren; i++) {
             LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(i);
 
-            EditText et_assignment_name = (EditText) ll_inner.getChildAt(0);
-            EditText et_assignment_weight = (EditText) ll_inner.getChildAt(1);
-
-            String str_assignment_name = et_assignment_name.getText().toString();
-            String str_assignment_weight = et_assignment_weight.getText().toString();
+            String s_name = ((EditText) ll_inner.getChildAt(0)).getText().toString();
+            String s_weight = ((EditText) ll_inner.getChildAt(1)).getText().toString();
 
             // Both are filled
-            if (!str_assignment_name.equals("") && !str_assignment_weight.equals("")) {
-                assignmentNames.add(str_assignment_name);
-                assignmentWeights.add(str_assignment_weight);
+            if (!s_name.equals("") && !s_weight.equals("")) {
+                assignmentNames.add(s_name);
+                assignmentWeights.add(s_weight);
             }
             // Name is filled but weight isn't
-            else if (!str_assignment_name.equals("") && str_assignment_weight.equals("")) {
+            else if (!s_name.equals("") && s_weight.equals("")) {
                 properFormat = false;
                 Toast.makeText(this, "Weight isn't filled in", Toast.LENGTH_SHORT).show();
                 // TODO: add in highlighting
             }
             // Weight is filled but name isn't
-            else if (str_assignment_name.equals("") && !str_assignment_weight.equals("")) {
+            else if (s_name.equals("") && !s_weight.equals("")) {
                 properFormat = false;
                 Toast.makeText(this, "Name isn't filled in", Toast.LENGTH_SHORT).show();
                 // TODO: add in highlighting
@@ -213,7 +195,7 @@ public class NewInputActivity extends AppCompatActivity {
         }
     }
 
-    public boolean write(View v) {
+    public boolean writeClass(View v) {
         ArrayList<String[]> testArrays = getSyllabusArray(v);
         if (testArrays != null) {
             csvReadWrite.writeCsvToStorage(testArrays);
@@ -224,12 +206,12 @@ public class NewInputActivity extends AppCompatActivity {
 
 
     public boolean listOf100(String[] lst) {
-        // Checks if the list adds up to 100
+        // Ensure weights sum up to approximately 100
         double sum = 0.0;
         for (String item : lst) {
             sum += Double.parseDouble(item);
         }
-        return sum == 100.0;
+        return abs(sum - 100.0) < 0.0001;
     }
 
 }

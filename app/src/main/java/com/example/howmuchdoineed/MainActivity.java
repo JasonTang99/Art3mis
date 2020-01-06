@@ -3,7 +3,6 @@ package com.example.howmuchdoineed;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
             Button b_new_input = new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
             b_new_input.setText(R.string.new_file);
-            b_new_input.setOnClickListener(overrideOnClickNewFile());
+            b_new_input.setOnClickListener(overrideOnClickNewClass());
             ll_files.addView(b_new_input);
         } else {
             for (String class_name : files) {
@@ -72,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Gives Button when there are no classes function to create a new class
-    View.OnClickListener overrideOnClickNewFile() {
-        return v -> startIntentNewInput();
+    View.OnClickListener overrideOnClickNewClass() {
+        return v -> startIntentNewClass();
     }
 
     // Adds "Delete" to action bar
@@ -97,21 +96,27 @@ public class MainActivity extends AppCompatActivity {
                         button.setOnClickListener(overrideOnClick(className));
                     }
                     item.setTitle(R.string.delete);
+                    item.setIcon(R.drawable.ic_action_delete);
                     deleting = false;
                 } else {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
                         Button button = (Button) ll_files.getChildAt(a);
                         String className = button.getText().toString();
-
-                        button.setText("Delete " + className);
+                        String del = "Delete " + className;
+                        
+                        button.setText(del);
                         button.setOnClickListener(overrideOnClickDelete(className));
                     }
-                    item.setTitle(R.string.view_files);
+                    item.setTitle(R.string.done);
+                    
+                    // Does this even work?
+                    item.setIcon(null);
+                    
                     deleting = true;
                 }
 
             case R.id.ab_add:
-                startIntentNewInput();
+                startIntentNewClass();
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void startIntentNewInput() {
+    public void startIntentNewClass() {
         startActivity(new Intent(this, NewInputActivity.class));
     }
 
@@ -135,13 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirmation");
-        builder.setMessage("Do you want to delete" + className + "?");
-//        builder.setIcon(R.drawable.ic_launcher);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                del[0] = true;
-            }
+        builder.setMessage("Do you want to delete " + className + "?");
+        builder.setPositiveButton("Yes", (dialog, id) -> {
+            dialog.dismiss();
+            del[0] = true;
         });
         builder.setNegativeButton("No", (dialog, id) -> dialog.dismiss());
         AlertDialog alert = builder.create();
@@ -149,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println(del[0]);
 
+        if (del[0]) {
+            this.deleteFile(className + ".csv");
+        }
 //        this.deleteFile(className + ".csv");
 
         this.recreate();

@@ -36,6 +36,7 @@ public class EditGradesActivity extends AppCompatActivity {
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
 
+        // TODO: Copy File Options one
         sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
         courseName = sent.get(0);
         assignmentNames = sent.get(1);
@@ -43,35 +44,7 @@ public class EditGradesActivity extends AppCompatActivity {
         grades = sent.get(3);
 
         ll_grades = findViewById(R.id.ll_grades);
-        fillScrollView();
-    }
 
-    // Adds "Done" to action bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    // Adds "Done" to action bar
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_bar_done:
-                // Gets the activity view
-                View content = findViewById(android.R.id.content);
-                write(content);
-                Intent intent = new Intent(this, FileOptionsActivity.class);
-                intent.putExtra("Arraylist", sent);
-                startActivity(intent);
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-
-    public void fillScrollView(){
         for (int a = 0; a < assignmentNames.length; a++) {
             LinearLayout.LayoutParams paramEntry = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -90,8 +63,9 @@ public class EditGradesActivity extends AppCompatActivity {
             LinearLayout ll_entry = new LinearLayout(this);
             ll_entry.setLayoutParams(paramEntry);
 
+            String s_curr_mark = "What did you get on " + assignmentNames[a] + "?";
             TextView tv_question = new TextView(this);
-            tv_question.setText("What did you get on " + assignmentNames[a] + "?");
+            tv_question.setText(s_curr_mark);
             tv_question.setSingleLine();
             tv_question.setLayoutParams(paramQuestion);
 
@@ -113,13 +87,34 @@ public class EditGradesActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.done_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ab_done:
+                View content = findViewById(android.R.id.content);
+                writeNewGrades(content);
+                Intent intent = new Intent(this, FileOptionsActivity.class);
+                intent.putExtra("Arraylist", sent);
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
     public ArrayList<String[]> getGrades(View v) {
         String[] newGrades = new String[assignmentNames.length];
 
         for (int a = 0; a < assignmentNames.length; a++) {
+            // Elements of ll are [text_view, edit_text]
             LinearLayout ll_inner = (LinearLayout) ll_grades.getChildAt(a);
-            // The first element (index 0) is the question textview
             EditText et_grade = (EditText) ll_inner.getChildAt(1);
             String grade = et_grade.getText().toString();
 
@@ -131,10 +126,8 @@ public class EditGradesActivity extends AppCompatActivity {
         return sent;
     }
 
-    public void write(View v) {
-        // Reads the new grades into "sent"
+    public void writeNewGrades(View v) {
         sent = getGrades(v);
-        // Writes sent into the storage
         csvReadWrite.writeCsvToStorage(sent);
     }
 
