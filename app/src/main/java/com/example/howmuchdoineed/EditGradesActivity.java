@@ -36,7 +36,6 @@ public class EditGradesActivity extends AppCompatActivity {
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
 
-        // TODO: Copy File Options one
         sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
         courseName = sent.get(0);
         assignmentNames = sent.get(1);

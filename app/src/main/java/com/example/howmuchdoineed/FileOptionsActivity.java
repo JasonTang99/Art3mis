@@ -29,23 +29,16 @@ public class FileOptionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: How to get type of object and maybe deconstruct arraylist in one go
-        // TODO: Strip grades and other stuff of empties
-        if (getIntent().getSerializableExtra("Arraylist") == java.util.ArrayList<java.lang.String[]>) {
-            sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
-            courseName = sent.get(0);
-            assignmentNames = sent.get(1);
-            assignmentWeights = sent.get(2);
-            grades = sent.get(3);
+        sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
+        courseName = sent.get(0);
+        assignmentNames = sent.get(1);
+        assignmentWeights = sent.get(2);
+        grades = sent.get(3);
 
-            if (isEmpty(grades)) {
-                Intent intent = new Intent(this, EditGradesActivity.class);
-                intent.putExtra("Arraylist", sent);
-                startActivity(intent);
-            }
-        } else {
-            return;
-            // TODO: Return or something to previous activity
+        if (isEmpty(grades)) {
+            Intent intent = new Intent(this, EditGradesActivity.class);
+            intent.putExtra("Arraylist", sent);
+            startActivity(intent);
         }
 
         setContentView(R.layout.activity_file_options);
@@ -75,7 +68,7 @@ public class FileOptionsActivity extends AppCompatActivity {
 
     }
 
-    public Double calcCurrentGrade() {
+    public double calcCurrentGrade() {
         double mark = 0.0;
         double max_mark = 0.0;
 
@@ -98,24 +91,16 @@ public class FileOptionsActivity extends AppCompatActivity {
         return current_grade;
     }
 
-    public void calcHowMuch(double final_grade) {
-        Double current_grade = calcCurrentGrade();
-
+    public void calcHowMuch(double desired_grade) {
+        double current_grade = calcCurrentGrade();
         int num_missing = 0;
         int missing_index = 0;
-        int a = 0;
-        double total_grade = 0;
 
-        // TODO: Faster indexing?
-        while (a < grades.length) {
+        for (int a = 0; a < grades.length; a++) {
             if (grades[a].equals("")) {
                 num_missing++;
                 missing_index = a;
             }
-            else {
-                total_grade += Double.parseDouble(grades[a]) * Double.parseDouble(assignmentWeights[a]) / 100.0;
-            }
-            a++;
         }
 
         if (num_missing > 1) {
@@ -129,12 +114,11 @@ public class FileOptionsActivity extends AppCompatActivity {
             b_how_much.setClickable(false);
         }
         else {
-            double howMuch = (final_grade - current_grade) * 100 / Double.parseDouble(assignmentWeights[missing_index]);
-            String msg = "You need " + df.format(howMuch) + " on " + assignmentNames[missing_index] + " to get a final mark of " + df.format(final_grade) + "%";
+            double howMuch = (desired_grade - current_grade) * 100 / Double.parseDouble(assignmentWeights[missing_index]);
+            String msg = "You need " + df.format(howMuch) + " on " + assignmentNames[missing_index] + " to get a final mark of " + df.format(desired_grade) + "%";
             TextView tv_how_much = findViewById(R.id.tv_how_much);
             tv_how_much.setText(msg);
         }
-
     }
 
     public boolean isEmpty(String[] lst) {

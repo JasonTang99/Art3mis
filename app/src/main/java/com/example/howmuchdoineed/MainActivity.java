@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
             tv_choose_file.setText(R.string.no_files);
 
             Button b_new_input = new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
-            b_new_input.setText(R.string.new_file);
+            b_new_input.setText(R.string.new_class);
             b_new_input.setOnClickListener(overrideOnClickNewClass());
+            b_new_input.setTag("b_new_class");
             ll_files.addView(b_new_input);
         } else {
             for (String class_name : files) {
@@ -89,29 +90,35 @@ public class MainActivity extends AppCompatActivity {
             case R.id.ab_delete:
                 if (deleting) {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
-                        Button button = (Button) ll_files.getChildAt(a);
-                        String className = button.getText().toString().substring(7);
+                        View child = ll_files.getChildAt(a);
+                        if ( (child instanceof Button) && (child.getTag() != "b_new_class") ) {
+                            Button button = (Button) ll_files.getChildAt(a);
+                            String className = button.getText().toString().substring(7);
 
-                        button.setText(className);
-                        button.setOnClickListener(overrideOnClick(className));
+                            button.setText(className);
+                            button.setOnClickListener(overrideOnClick(className));
+                        }
                     }
                     item.setTitle(R.string.delete);
                     item.setIcon(R.drawable.ic_action_delete);
                     deleting = false;
                 } else {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
-                        Button button = (Button) ll_files.getChildAt(a);
-                        String className = button.getText().toString();
-                        String del = "Delete " + className;
-                        
-                        button.setText(del);
-                        button.setOnClickListener(overrideOnClickDelete(className));
+                        View child = ll_files.getChildAt(a);
+                        if ( (child instanceof Button) && (child.getTag() != "b_new_class") ) {
+                            Button button = (Button) ll_files.getChildAt(a);
+                            String className = button.getText().toString();
+                            String del = "Delete " + className;
+
+                            button.setText(del);
+                            button.setOnClickListener(overrideOnClickDelete(className));
+                        }
+
                     }
                     item.setTitle(R.string.done);
                     
                     // Does this even work?
                     item.setIcon(null);
-                    
                     deleting = true;
                 }
 
@@ -134,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteClass(String className) {
-        // TODO: Add in Dialog Confirmation Box
+//         TODO: Add in Dialog Confirmation Box
 
         final boolean[] del = new boolean[1];
 

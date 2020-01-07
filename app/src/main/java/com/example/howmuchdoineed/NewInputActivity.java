@@ -1,9 +1,11 @@
 package com.example.howmuchdoineed;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -11,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -23,8 +24,6 @@ import java.util.Arrays;
 import static java.lang.Math.abs;
 
 public class NewInputActivity extends AppCompatActivity {
-
-    int totalHeight;
     ScrollView sv;
     EditText et_course_name;
     LinearLayout ll_scroll;
@@ -64,18 +63,14 @@ public class NewInputActivity extends AppCompatActivity {
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }
+                System.out.println("done");
+
             case R.id.ab_add:
+                System.out.println("add");
                 newAssignment();
-
-            default:
-                return super.onOptionsItemSelected(item);
-
         }
+        return super.onOptionsItemSelected(item);
     }
-
-//    public void addAssignment(View v) {
-//        newAssignment();
-//    }
 
     public void newAssignment() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -85,11 +80,12 @@ public class NewInputActivity extends AppCompatActivity {
         LinearLayout.LayoutParams paramName = new LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramName.weight = 60;
 
         LinearLayout.LayoutParams paramWeight = new LinearLayout.LayoutParams(
                 0,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        paramName.weight = 60;
         paramWeight.weight = 35;
 
         LinearLayout newAssignment = new LinearLayout(this);
@@ -118,20 +114,22 @@ public class NewInputActivity extends AppCompatActivity {
 
         // Scrolls to the bottom of the ScrollView
         final ScrollView sc = sv;
-        sc.post((Runnable) () -> sc.fullScroll(ScrollViewWithMaxHeight.FOCUS_DOWN));
+        sc.post(() -> sc.fullScroll(ScrollViewWithMaxHeight.FOCUS_DOWN));
     }
 
     public ArrayList<String[]> getSyllabusArray(View v) {
-        boolean properFormat = true;
-        ArrayList<String[]> sent = new ArrayList<>();
-
         String[] courseName = {et_course_name.getText().toString()};
+        boolean properFormat = true;
         if (courseName[0].equals("")) {
             // TODO: add in highlighting
-            properFormat = false;
-        }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                et_course_name.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
+            }
+            Toast.makeText(this, "Add a class name", Toast.LENGTH_SHORT).show();
 
-        sent.add(courseName);
+            properFormat = false;
+            return null;
+        }
 
         ArrayList<String> assignmentNames = new ArrayList<>();
         ArrayList<String> assignmentWeights = new ArrayList<>();
@@ -140,59 +138,88 @@ public class NewInputActivity extends AppCompatActivity {
         for (int i = 0; i < numChildren; i++) {
             LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(i);
 
-            String s_name = ((EditText) ll_inner.getChildAt(0)).getText().toString();
-            String s_weight = ((EditText) ll_inner.getChildAt(1)).getText().toString();
+            EditText et_name = (EditText) ll_inner.getChildAt(0);
+            EditText et_weight = (EditText) ll_inner.getChildAt(1);
 
-            // Both are filled
-            if (!s_name.equals("") && !s_weight.equals("")) {
+            String s_name = et_name.getText().toString();
+            String s_weight = et_weight.getText().toString();
+            if (s_weight.equals("") && s_name.equals("")) {
+                continue;
+            }
+
+            if (s_weight.equals("") || s_name.equals("")) {
+                Toast.makeText(this, "Field not filled in", Toast.LENGTH_SHORT).show();
+
+                // TODO: add in highlighting
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (s_weight.equals("")) {
+                        et_weight.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
+                    } else {
+                        et_name.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
+                    }
+                }
+                properFormat = false;
+                return null;
+            } else {
                 assignmentNames.add(s_name);
                 assignmentWeights.add(s_weight);
             }
-            // Name is filled but weight isn't
-            else if (!s_name.equals("") && s_weight.equals("")) {
-                properFormat = false;
-                Toast.makeText(this, "Weight isn't filled in", Toast.LENGTH_SHORT).show();
-                // TODO: add in highlighting
-            }
-            // Weight is filled but name isn't
-            else if (s_name.equals("") && !s_weight.equals("")) {
-                properFormat = false;
-                Toast.makeText(this, "Name isn't filled in", Toast.LENGTH_SHORT).show();
-                // TODO: add in highlighting
-            }
         }
 
-        // Name and weight is empty
         if (assignmentNames.size() == 0 || assignmentWeights.size() == 0) {
             // TODO: add in highlighting
-            properFormat = false;
+            // Highlight First Entry
+            LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(0);
+
+            EditText et_name = (EditText) ll_inner.getChildAt(0);
+            EditText et_weight = (EditText) ll_inner.getChildAt(1);
+
             Toast.makeText(this, "Fill in at least one assignment", Toast.LENGTH_SHORT).show();
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                et_weight.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
+                et_name.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
+            }
+
+            properFormat = false;
+            return null;
         }
+
         String[] lst_names = assignmentNames.toArray(new String[0]);
         String[] lst_weights = assignmentWeights.toArray(new String[0]);
 
-        // Check if weights add up to 100
         if (!listOf100(lst_weights)) {
             // TODO: add in highlighting
+            Toast.makeText(this, "Weights don't add up to 100", Toast.LENGTH_SHORT).show();
             properFormat = false;
-            Toast.makeText(this, "This doesn't add up to 100", Toast.LENGTH_SHORT).show();
+
+            // Highlights all weights
+            for (int i = 0; i < numChildren; i++) {
+                LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(i);
+                EditText et_weight = (EditText) ll_inner.getChildAt(1);
+                String s_weight = et_weight.getText().toString();
+
+                if (!s_weight.equals("") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    et_weight.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
+                }
+            }
         }
 
-        sent.add(lst_names);
-        sent.add(lst_weights);
+        if (!properFormat) {
+            return null;
+        }
 
         // Empty array cause no grades yet
         String[] grades = new String[lst_names.length];
         Arrays.fill(grades, "");
 
+        ArrayList<String[]> sent = new ArrayList<>();
+        sent.add(courseName);
+        sent.add(lst_names);
+        sent.add(lst_weights);
         sent.add(grades);
 
-        if (properFormat) {
-            return sent;
-        } else {
-            return null;
-        }
+        return sent;
     }
 
     public boolean writeClass(View v) {

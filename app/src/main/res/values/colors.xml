@@ -4,6 +4,7 @@
   <color name="colorPrimaryDark">#008A90</color>
   <color name="colorAccent">#393e46</color>
   <color name="colorAccentDark">#222831</color>
+  <color name="error">#89EB0210</color>
 
   <color name="textPrimary">#353535</color>
   <color name="textPrimaryLight">#777777</color>

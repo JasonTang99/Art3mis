@@ -7,14 +7,13 @@
   <string name="contact">Contact Me</string>
 
   <string name="grade">Grade</string>
-  <string name="worth">Percentage Weight</string>
+  <string name="worth">Weight</string>
   <string name="course">Course Name</string>
   <string name="work">Assignment Name</string>
   <string name="add_work">Add Another Assignment</string>
 
   <string name="choose_file">Choose which class you want to open</string>
   <string name="no_files">You have no classes</string>
-  <string name="new_file">"Make a new file"</string>
 
   <string name="modify_grades">Edit grades</string>
   <string name="how_much">Calculate How Much You Need</string>
@@ -25,7 +24,6 @@
   <string name="ic_del">Delete Class</string>
 
   <string name="curr_grade">Current Grade: </string>
-
-
+  <string name="delete">Delete</string>
 
 </resources>
