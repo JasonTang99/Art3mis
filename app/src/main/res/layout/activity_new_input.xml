@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="@string/course"
-    android:inputType="textCapCharacters" />
+    android:inputType="text" />
 
   <ScrollView
       android:layout_width="match_parent"

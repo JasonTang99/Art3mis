@@ -40,14 +40,15 @@ public class FileOptionsActivity extends AppCompatActivity {
             intent.putExtra("Arraylist", sent);
             startActivity(intent);
         }
+        else {
+            setContentView(R.layout.activity_file_options);
 
-        setContentView(R.layout.activity_file_options);
+            Double current_grade = calcCurrentGrade();
 
-        Double current_grade = calcCurrentGrade();
-
-        String s_current_grade = "Your current grade is: " + df.format(current_grade);
-        TextView tv_current_grade = findViewById(R.id.tv_current_grade);
-        tv_current_grade.setText(s_current_grade);
+            String s_current_grade = "Your current grade is: " + df.format(current_grade);
+            TextView tv_current_grade = findViewById(R.id.tv_current_grade);
+            tv_current_grade.setText(s_current_grade);
+        }
     }
 
     public void openGrades(View v) {

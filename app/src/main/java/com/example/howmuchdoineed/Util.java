@@ -8,9 +8,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.widget.ScrollView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 class CsvReadWrite {
     private String baseDir;
@@ -58,48 +64,26 @@ class CsvReadWrite {
     }
 }
 
-
-class ScrollViewWithMaxHeight extends ScrollView {
-
-    public static int WITHOUT_MAX_HEIGHT_VALUE = -1;
-
-    private int maxHeight = WITHOUT_MAX_HEIGHT_VALUE;
-
-    public ScrollViewWithMaxHeight(Context context) {
-        super(context);
-    }
-
-    public ScrollViewWithMaxHeight(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public ScrollViewWithMaxHeight(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-
+class FireMissilesDialogFragment extends DialogFragment {
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        try {
-            int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-            if (maxHeight != WITHOUT_MAX_HEIGHT_VALUE
-                    && heightSize > maxHeight) {
-                heightSize = maxHeight;
-            }
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.AT_MOST);
-            getLayoutParams().height = heightSize;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        }
-    }
-
-    public void setMaxHeight(int maxHeight) {
-        this.maxHeight = maxHeight;
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the Builder class for convenient dialog construction
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.dialog_msg)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // FIRE ZE MISSILES!
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        return builder.create();
     }
 }
-
-
 
 
 

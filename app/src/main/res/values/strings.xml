@@ -1,21 +1,17 @@
 <resources>
   <string name="app_name">Art3mis</string>
 
-  <string name="home">Go Back Home</string>
-  <string name="new_class">Create New Class</string>
-  <string name="view_classes">View Existing Classes</string>
-  <string name="contact">Contact Me</string>
-
   <string name="grade">Grade</string>
   <string name="worth">Weight</string>
   <string name="course">Course Name</string>
   <string name="work">Assignment Name</string>
   <string name="add_work">Add Another Assignment</string>
 
-  <string name="choose_file">Choose which class you want to open</string>
-  <string name="no_files">You have no classes</string>
+  <string name="choose_file">Choose a Class</string>
+  <string name="no_files">You Have No Classes</string>
+  <string name="new_class">Make a New Class</string>
 
-  <string name="modify_grades">Edit grades</string>
+  <string name="modify_grades">Edit Grades</string>
   <string name="how_much">Calculate How Much You Need</string>
   <string name="what_grade">Desired Final Grade</string>
 
@@ -25,5 +21,9 @@
 
   <string name="curr_grade">Current Grade: </string>
   <string name="delete">Delete</string>
+
+  <string name="dialog_msg">Are you sure you want to delete</string>
+  <string name="yes">Yes</string>
+  <string name="no">No</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.howmuchdoineed;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 Button button= new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
                 button.setText(class_name);
                 button.setOnClickListener(overrideOnClick(class_name));
+                button.setTag("b_new_class");
                 ll_files.addView(button);
 
                 View div = new View(new ContextThemeWrapper(this, R.style.Divider), null, 0);
@@ -87,11 +89,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+
+            case R.id.ab_add:
+                System.out.println("AHHHHHHHHH");
+                startIntentNewClass();
+
             case R.id.ab_delete:
                 if (deleting) {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
                         View child = ll_files.getChildAt(a);
-                        if ( (child instanceof Button) && (child.getTag() != "b_new_class") ) {
+                        if ( (child instanceof Button) && (child.getTag() == "b_new_class") ) {
                             Button button = (Button) ll_files.getChildAt(a);
                             String className = button.getText().toString().substring(7);
 
@@ -105,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
                         View child = ll_files.getChildAt(a);
-                        if ( (child instanceof Button) && (child.getTag() != "b_new_class") ) {
+                        System.out.println(child.getTag());
+                        if ( (child instanceof Button) && (child.getTag() == "b_new_class") ) {
                             Button button = (Button) ll_files.getChildAt(a);
                             String className = button.getText().toString();
                             String del = "Delete " + className;
@@ -116,14 +124,10 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     item.setTitle(R.string.done);
-                    
-                    // Does this even work?
                     item.setIcon(null);
                     deleting = true;
                 }
 
-            case R.id.ab_add:
-                startIntentNewClass();
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -142,28 +146,30 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteClass(String className) {
 //         TODO: Add in Dialog Confirmation Box
-
-        final boolean[] del = new boolean[1];
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmation");
-        builder.setMessage("Do you want to delete " + className + "?");
-        builder.setPositiveButton("Yes", (dialog, id) -> {
-            dialog.dismiss();
-            del[0] = true;
-        });
-        builder.setNegativeButton("No", (dialog, id) -> dialog.dismiss());
-        AlertDialog alert = builder.create();
-        alert.show();
 
-        System.out.println(del[0]);
-
-        if (del[0]) {
+        builder.setMessage(getResources().getString(R.string.dialog_msg) + " " + className + "?");
+        builder.setPositiveButton(R.string.yes, (dialog, id) -> {
             this.deleteFile(className + ".csv");
-        }
+            dialog.dismiss();
+            this.recreate();
+        });
+        builder.setNegativeButton(R.string.no, (dialog, id) -> {
+            dialog.dismiss();
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+//        System.out.println(del[0]);
+//
+//        if (del[0]) {
+//            this.deleteFile(className + ".csv");
+//        }
 //        this.deleteFile(className + ".csv");
 
-        this.recreate();
+//        this.recreate();
     }
 
 }
