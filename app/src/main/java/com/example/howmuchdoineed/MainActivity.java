@@ -3,7 +3,6 @@ package com.example.howmuchdoineed;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -89,11 +88,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-
             case R.id.ab_add:
-                System.out.println("AHHHHHHHHH");
                 startIntentNewClass();
-
+                break;
             case R.id.ab_delete:
                 if (deleting) {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
@@ -121,33 +118,48 @@ public class MainActivity extends AppCompatActivity {
                             button.setText(del);
                             button.setOnClickListener(overrideOnClickDelete(className));
                         }
-
                     }
                     item.setTitle(R.string.done);
                     item.setIcon(null);
                     deleting = true;
                 }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
+    public boolean isEmpty(String[] lst) {
+        if (lst.length == 0)
+            return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+        boolean empty = true;
+        for (String a: lst) {
+            if ( a != null && !(a.equals("")) ) {
+                empty = false;
+                break;
+            }
+        }
+        return empty;
+    }
+
+    public void startIntentClassOptions(ArrayList<String[]> sent) {
+        if (isEmpty(sent.get(3))) {
+            Intent intent = new Intent(this, EditGradesActivity.class);
+            intent.putExtra("Arraylist", sent);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, ClassOptionsActivity.class);
+            intent.putExtra("Arraylist", sent);
+            startActivity(intent);
         }
     }
 
-    public void startIntentClassOptions(ArrayList<String[]> arrList) {
-        Intent intent = new Intent(this, FileOptionsActivity.class);
-        intent.putExtra("Arraylist", arrList);
-        startActivity(intent);
-    }
-
     public void startIntentNewClass() {
-        startActivity(new Intent(this, NewInputActivity.class));
+        startActivity(new Intent(this, NewClassActivity.class));
     }
 
     public void deleteClass(String className) {
-//         TODO: Add in Dialog Confirmation Box
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder.setMessage(getResources().getString(R.string.dialog_msg) + " " + className + "?");
         builder.setPositiveButton(R.string.yes, (dialog, id) -> {
             this.deleteFile(className + ".csv");
@@ -157,19 +169,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton(R.string.no, (dialog, id) -> {
             dialog.dismiss();
         });
-
-        // Create the AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();
-
-//        System.out.println(del[0]);
-//
-//        if (del[0]) {
-//            this.deleteFile(className + ".csv");
-//        }
-//        this.deleteFile(className + ".csv");
-
-//        this.recreate();
     }
 
 }

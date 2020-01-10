@@ -99,13 +99,13 @@ public class EditGradesActivity extends AppCompatActivity {
             case R.id.ab_done:
                 View content = findViewById(android.R.id.content);
                 writeNewGrades(content);
-                Intent intent = new Intent(this, FileOptionsActivity.class);
+                Intent intent = new Intent(this, ClassOptionsActivity.class);
                 intent.putExtra("Arraylist", sent);
                 startActivity(intent);
-            default:
-                return super.onOptionsItemSelected(item);
-
+                break;
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public ArrayList<String[]> getGrades(View v) {

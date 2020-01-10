@@ -1,6 +1,5 @@
 package com.example.howmuchdoineed;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,7 +22,7 @@ import java.util.Arrays;
 
 import static java.lang.Math.abs;
 
-public class NewInputActivity extends AppCompatActivity {
+public class NewClassActivity extends AppCompatActivity {
     ScrollView sv;
     EditText et_course_name;
     LinearLayout ll_scroll;
@@ -34,7 +33,7 @@ public class NewInputActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_input);
+        setContentView(R.layout.activity_new_class);
 
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
@@ -58,16 +57,18 @@ public class NewInputActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.ab_done:
                 View content = findViewById(android.R.id.content);
-                boolean flag = writeClass(content);
-                if (flag) {
-                    Intent intent = new Intent(this, MainActivity.class);
+                ArrayList<String[]> sent = getSyllabusArray(content);
+                if (sent != null) {
+                    csvReadWrite.writeCsvToStorage(sent);
+                    Intent intent = new Intent(this, EditGradesActivity.class);
+                    intent.putExtra("Arraylist", sent);
                     startActivity(intent);
                 }
-                System.out.println("done");
+                break;
 
             case R.id.ab_add:
-                System.out.println("add");
                 newAssignment();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -88,8 +89,8 @@ public class NewInputActivity extends AppCompatActivity {
         paramName.weight = 60;
         paramWeight.weight = 35;
 
-        LinearLayout newAssignment = new LinearLayout(this);
-        newAssignment.setLayoutParams(params);
+        LinearLayout ll_assign = new LinearLayout(this);
+        ll_assign.setLayoutParams(params);
 
         EditText assignmentName = new EditText(this);
         assignmentName.setHint(R.string.work);
@@ -106,20 +107,18 @@ public class NewInputActivity extends AppCompatActivity {
         assignmentWeight.setSingleLine();
         assignmentName.setSingleLine();
 
-        newAssignment.addView(assignmentName);
-        newAssignment.addView(assignmentWeight);
+        ll_assign.addView(assignmentName);
+        ll_assign.addView(assignmentWeight);
 
-        ll_scroll.addView(newAssignment);
-
+        ll_scroll.addView(ll_assign);
 
         // Scrolls to the bottom of the ScrollView
         final ScrollView sc = sv;
-        sc.post(() -> sc.fullScroll(ScrollViewWithMaxHeight.FOCUS_DOWN));
+        sc.post(() -> sc.fullScroll(ScrollView.FOCUS_DOWN));
     }
 
     public ArrayList<String[]> getSyllabusArray(View v) {
         String[] courseName = {et_course_name.getText().toString()};
-        boolean properFormat = true;
         if (courseName[0].equals("")) {
             // TODO: add in highlighting
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -127,7 +126,6 @@ public class NewInputActivity extends AppCompatActivity {
             }
             Toast.makeText(this, "Add a class name", Toast.LENGTH_SHORT).show();
 
-            properFormat = false;
             return null;
         }
 
@@ -158,7 +156,6 @@ public class NewInputActivity extends AppCompatActivity {
                         et_name.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
                     }
                 }
-                properFormat = false;
                 return null;
             } else {
                 assignmentNames.add(s_name);
@@ -181,7 +178,6 @@ public class NewInputActivity extends AppCompatActivity {
                 et_name.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
             }
 
-            properFormat = false;
             return null;
         }
 
@@ -191,7 +187,6 @@ public class NewInputActivity extends AppCompatActivity {
         if (!listOf100(lst_weights)) {
             // TODO: add in highlighting
             Toast.makeText(this, "Weights don't add up to 100", Toast.LENGTH_SHORT).show();
-            properFormat = false;
 
             // Highlights all weights
             for (int i = 0; i < numChildren; i++) {
@@ -203,9 +198,6 @@ public class NewInputActivity extends AppCompatActivity {
                     et_weight.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
                 }
             }
-        }
-
-        if (!properFormat) {
             return null;
         }
 
@@ -221,16 +213,6 @@ public class NewInputActivity extends AppCompatActivity {
 
         return sent;
     }
-
-    public boolean writeClass(View v) {
-        ArrayList<String[]> testArrays = getSyllabusArray(v);
-        if (testArrays != null) {
-            csvReadWrite.writeCsvToStorage(testArrays);
-            return true;
-        }
-        return false;
-    }
-
 
     public boolean listOf100(String[] lst) {
         // Ensure weights sum up to approximately 100

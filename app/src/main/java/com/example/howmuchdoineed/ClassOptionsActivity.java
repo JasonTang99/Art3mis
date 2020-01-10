@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class FileOptionsActivity extends AppCompatActivity {
+public class ClassOptionsActivity extends AppCompatActivity {
 
     ArrayList<String[]> sent;
 
@@ -35,20 +35,12 @@ public class FileOptionsActivity extends AppCompatActivity {
         assignmentWeights = sent.get(2);
         grades = sent.get(3);
 
-        if (isEmpty(grades)) {
-            Intent intent = new Intent(this, EditGradesActivity.class);
-            intent.putExtra("Arraylist", sent);
-            startActivity(intent);
-        }
-        else {
-            setContentView(R.layout.activity_file_options);
+        setContentView(R.layout.activity_class_options);
 
-            Double current_grade = calcCurrentGrade();
-
-            String s_current_grade = "Your current grade is: " + df.format(current_grade);
-            TextView tv_current_grade = findViewById(R.id.tv_current_grade);
-            tv_current_grade.setText(s_current_grade);
-        }
+        Double current_grade = calcCurrentGrade();
+        String s_current_grade = "Your current grade is: " + df.format(current_grade);
+        TextView tv_current_grade = findViewById(R.id.tv_current_grade);
+        tv_current_grade.setText(s_current_grade);
     }
 
     public void openGrades(View v) {
@@ -62,8 +54,7 @@ public class FileOptionsActivity extends AppCompatActivity {
         String how_much = et_how_much.getText().toString();
         if (!how_much.equals("")) {
             calcHowMuch(Double.parseDouble(how_much));
-        }
-        else {
+        } else {
             Toast.makeText(this,"Enter a desired final grade", Toast.LENGTH_SHORT).show();
         }
 
@@ -122,20 +113,6 @@ public class FileOptionsActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isEmpty(String[] lst) {
-        if (lst.length == 0)
-            return true;
-
-        boolean empty = true;
-        for (String a: lst) {
-            if ( a != null && !(a.equals("")) ) {
-                empty = false;
-                break;
-            }
-        }
-
-        return empty;
-    }
 }
 
 

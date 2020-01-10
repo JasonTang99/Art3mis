@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewInputActivity" />
-        <activity android:name=".FileOptionsActivity" />
+        <activity android:name=".NewClassActivity" />
+        <activity android:name=".ClassOptionsActivity" />
         <activity android:name=".EditGradesActivity" />
         <activity android:name=".CsvReadWrite" />
         <activity android:name=".MainActivity">
