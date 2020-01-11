@@ -28,40 +28,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        tv_choose_file = findViewById(R.id.tv_choose_file);
-        ll_files = findViewById(R.id.ll_files);
-
-        baseDir = this.getFilesDir().toString();
-        csvReadWrite = new CsvReadWrite(baseDir);
-
-        ArrayList<String> files = new ArrayList<>();
-        for (String class_name : this.fileList())
-            if (class_name.contains(".csv"))
-                files.add(class_name.replaceAll(".csv", ""));
-
-        if (files.size() == 0) {
-            tv_choose_file.setText(R.string.no_files);
-
-            Button b_new_input = new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
-            b_new_input.setText(R.string.new_class);
-            b_new_input.setOnClickListener(overrideOnClickNewClass());
-            b_new_input.setTag("b_new_class");
-            ll_files.addView(b_new_input);
-        } else {
-            for (String class_name : files) {
-                Button button= new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
-                button.setText(class_name);
-                button.setOnClickListener(overrideOnClick(class_name));
-                button.setTag("b_new_class");
-                ll_files.addView(button);
-
-                View div = new View(new ContextThemeWrapper(this, R.style.Divider), null, 0);
-                ll_files.addView(div);
-            }
-        }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("AHH");
+        if (ll_files != null) {
+            ll_files.removeAllViews();
+        }
+        readInFiles();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.ab_add:
-//                startActivity(new Intent(this, Main2Activity.class));
-
                 startIntentNewClass();
                 return true;
 
@@ -115,6 +90,40 @@ public class MainActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    void readInFiles() {
+        tv_choose_file = findViewById(R.id.tv_choose_file);
+        ll_files = findViewById(R.id.ll_files);
+
+        baseDir = this.getFilesDir().toString();
+        csvReadWrite = new CsvReadWrite(baseDir);
+
+        ArrayList<String> files = new ArrayList<>();
+        for (String class_name : this.fileList())
+            if (class_name.contains(".csv"))
+                files.add(class_name.replaceAll(".csv", ""));
+
+        if (files.size() == 0) {
+            tv_choose_file.setText(R.string.no_files);
+
+            Button b_new_input = new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
+            b_new_input.setText(R.string.new_class);
+            b_new_input.setOnClickListener(overrideOnClickNewClass());
+            b_new_input.setTag("b_new_class");
+            ll_files.addView(b_new_input);
+        } else {
+            for (String class_name : files) {
+                Button button= new Button(new ContextThemeWrapper(this, R.style.MainClassButton), null, 0);
+                button.setText(class_name);
+                button.setOnClickListener(overrideOnClick(class_name));
+                button.setTag("b_new_class");
+                ll_files.addView(button);
+
+                View div = new View(new ContextThemeWrapper(this, R.style.Divider), null, 0);
+                ll_files.addView(div);
+            }
         }
     }
 

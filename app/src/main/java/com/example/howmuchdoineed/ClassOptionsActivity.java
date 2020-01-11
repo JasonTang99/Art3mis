@@ -31,6 +31,8 @@ public class ClassOptionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_class_options);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
         courseName = sent.get(0);
@@ -38,43 +40,37 @@ public class ClassOptionsActivity extends AppCompatActivity {
         assignmentWeights = sent.get(2);
         grades = sent.get(3);
 
-        setContentView(R.layout.activity_class_options);
-
         Double current_grade = calcCurrentGrade();
         String s_current_grade = "Your current grade is: " + df.format(current_grade);
         TextView tv_current_grade = findViewById(R.id.tv_current_grade);
         tv_current_grade.setText(s_current_grade);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.edit_menu, menu);
+//        return true;
+//    }
 //
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        switch (item.getItemId()) {
-//            case R.id.ab_done:
-//                View content = findViewById(android.R.id.content);
-//                ArrayList<String[]> sent = getSyllabusArray(content);
-//                if (sent != null) {
-//                    csvReadWrite.writeCsvToStorage(sent);
-//                    Intent intent = new Intent(this, EditGradesActivity.class);
-//                    intent.putExtra("Arraylist", sent);
-//                    startActivity(intent);
-//                }
-//                return true;
-//
-//            case R.id.ab_add:
-//                newAssignment();
+//            case R.id.home:
+//                this.finish();
 //                return true;
 //
 //            default:
 //                return super.onOptionsItemSelected(item);
 //        }
 //    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+//        super.recreate();
+        return true;
+    }
 
     public void openGrades(View v) {
         Intent intent = new Intent(this, EditGradesActivity.class);
@@ -148,9 +144,3 @@ public class ClassOptionsActivity extends AppCompatActivity {
     }
 
 }
-
-
-//    public void openHome(View v) {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//    }

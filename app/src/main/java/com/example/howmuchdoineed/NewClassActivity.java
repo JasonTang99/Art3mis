@@ -35,10 +35,9 @@ public class NewClassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_class);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        ActionBar actionBar = getActionBar();
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
 
@@ -58,6 +57,7 @@ public class NewClassActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        System.out.println(item.getItemId());
         switch (item.getItemId()) {
             case R.id.ab_done:
                 View content = findViewById(android.R.id.content);
@@ -77,6 +77,13 @@ public class NewClassActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+//        super.recreate();
+        return true;
     }
 
     public void newAssignment() {

@@ -32,6 +32,7 @@ public class EditGradesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_grades);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
@@ -103,10 +104,18 @@ public class EditGradesActivity extends AppCompatActivity {
                 intent.putExtra("Arraylist", sent);
                 startActivity(intent);
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
 
     public ArrayList<String[]> getGrades(View v) {
         String[] newGrades = new String[assignmentNames.length];
