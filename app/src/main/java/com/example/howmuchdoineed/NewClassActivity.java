@@ -2,6 +2,7 @@ package com.example.howmuchdoineed;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
@@ -35,6 +36,9 @@ public class NewClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_class);
 
+//        ActionBar actionBar = getActionBar();
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
 
@@ -64,13 +68,15 @@ public class NewClassActivity extends AppCompatActivity {
                     intent.putExtra("Arraylist", sent);
                     startActivity(intent);
                 }
-                break;
+                return true;
 
             case R.id.ab_add:
                 newAssignment();
-                break;
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     public void newAssignment() {
@@ -119,8 +125,13 @@ public class NewClassActivity extends AppCompatActivity {
 
     public ArrayList<String[]> getSyllabusArray(View v) {
         String[] courseName = {et_course_name.getText().toString()};
+
+        // Reset Tint
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            et_course_name.setBackgroundTintList(null);
+        }
+
         if (courseName[0].equals("")) {
-            // TODO: add in highlighting
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 et_course_name.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
             }
@@ -139,6 +150,11 @@ public class NewClassActivity extends AppCompatActivity {
             EditText et_name = (EditText) ll_inner.getChildAt(0);
             EditText et_weight = (EditText) ll_inner.getChildAt(1);
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                et_name.setBackgroundTintList(null);
+                et_weight.setBackgroundTintList(null);
+            }
+
             String s_name = et_name.getText().toString();
             String s_weight = et_weight.getText().toString();
             if (s_weight.equals("") && s_name.equals("")) {
@@ -147,8 +163,6 @@ public class NewClassActivity extends AppCompatActivity {
 
             if (s_weight.equals("") || s_name.equals("")) {
                 Toast.makeText(this, "Field not filled in", Toast.LENGTH_SHORT).show();
-
-                // TODO: add in highlighting
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (s_weight.equals("")) {
                         et_weight.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.error)));
@@ -164,7 +178,6 @@ public class NewClassActivity extends AppCompatActivity {
         }
 
         if (assignmentNames.size() == 0 || assignmentWeights.size() == 0) {
-            // TODO: add in highlighting
             // Highlight First Entry
             LinearLayout ll_inner = (LinearLayout) ll_scroll.getChildAt(0);
 
@@ -185,7 +198,6 @@ public class NewClassActivity extends AppCompatActivity {
         String[] lst_weights = assignmentWeights.toArray(new String[0]);
 
         if (!listOf100(lst_weights)) {
-            // TODO: add in highlighting
             Toast.makeText(this, "Weights don't add up to 100", Toast.LENGTH_SHORT).show();
 
             // Highlights all weights

@@ -1,29 +1,30 @@
 <resources>
-  <string name="app_name">Art3mis</string>
+    <string name="app_name">Art3mis</string>
 
-  <string name="grade">Grade</string>
-  <string name="worth">Weight</string>
-  <string name="course">Course Name</string>
-  <string name="work">Assignment Name</string>
-  <string name="add_work">Add Another Assignment</string>
+    <string name="grade">Grade</string>
+    <string name="worth">Weight</string>
+    <string name="course">Course Name</string>
+    <string name="work">Assignment Name</string>
+    <string name="add_work">Add Another Assignment</string>
 
-  <string name="choose_file">Choose a Class</string>
-  <string name="no_files">You Have No Classes</string>
-  <string name="new_class">Make a New Class</string>
+    <string name="choose_file">Choose a Class</string>
+    <string name="no_files">You Have No Classes</string>
+    <string name="new_class">Make a New Class</string>
 
-  <string name="modify_grades">Edit Grades</string>
-  <string name="how_much">Calculate How Much You Need</string>
-  <string name="what_grade">Desired Final Grade</string>
+    <string name="modify_grades">Edit Grades</string>
+    <string name="how_much">Calculate How Much You Need</string>
+    <string name="what_grade">Desired Final Grade</string>
 
-  <string name="done">Done</string>
-  <string name="ic_add">Add Class</string>
-  <string name="ic_del">Delete Class</string>
+    <string name="done">Done</string>
+    <string name="ic_add">Add Class</string>
+    <string name="ic_del">Delete Class</string>
 
-  <string name="curr_grade">Current Grade: </string>
-  <string name="delete">Delete</string>
+    <string name="curr_grade">Current Grade: </string>
+    <string name="delete">Delete</string>
 
-  <string name="dialog_msg">Are you sure you want to delete</string>
-  <string name="yes">Yes</string>
-  <string name="no">No</string>
+    <string name="dialog_msg">Are you sure you want to delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>

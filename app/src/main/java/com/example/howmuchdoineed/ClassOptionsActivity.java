@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +45,36 @@ public class ClassOptionsActivity extends AppCompatActivity {
         TextView tv_current_grade = findViewById(R.id.tv_current_grade);
         tv_current_grade.setText(s_current_grade);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.edit_menu, menu);
+        return true;
+    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.ab_done:
+//                View content = findViewById(android.R.id.content);
+//                ArrayList<String[]> sent = getSyllabusArray(content);
+//                if (sent != null) {
+//                    csvReadWrite.writeCsvToStorage(sent);
+//                    Intent intent = new Intent(this, EditGradesActivity.class);
+//                    intent.putExtra("Arraylist", sent);
+//                    startActivity(intent);
+//                }
+//                return true;
+//
+//            case R.id.ab_add:
+//                newAssignment();
+//                return true;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
     public void openGrades(View v) {
         Intent intent = new Intent(this, EditGradesActivity.class);
@@ -110,6 +143,7 @@ public class ClassOptionsActivity extends AppCompatActivity {
             String msg = "You need " + df.format(howMuch) + " on " + assignmentNames[missing_index] + " to get a final mark of " + df.format(desired_grade) + "%";
             TextView tv_how_much = findViewById(R.id.tv_how_much);
             tv_how_much.setText(msg);
+            tv_how_much.setVisibility(View.VISIBLE);
         }
     }
 

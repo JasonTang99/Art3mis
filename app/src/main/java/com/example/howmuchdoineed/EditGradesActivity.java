@@ -102,10 +102,10 @@ public class EditGradesActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, ClassOptionsActivity.class);
                 intent.putExtra("Arraylist", sent);
                 startActivity(intent);
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public ArrayList<String[]> getGrades(View v) {

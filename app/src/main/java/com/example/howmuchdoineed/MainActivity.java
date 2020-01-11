@@ -62,22 +62,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Gives Button with class name function to open that class
-    View.OnClickListener overrideOnClick(final String class_name) {
-        return v -> startIntentClassOptions(csvReadWrite.readCsvFromStorage(class_name));
-    }
 
-    // Turns Class Button to Delete
-    View.OnClickListener overrideOnClickDelete(final String class_name) {
-        return v -> deleteClass(class_name);
-    }
-
-    // Gives Button when there are no classes function to create a new class
-    View.OnClickListener overrideOnClickNewClass() {
-        return v -> startIntentNewClass();
-    }
-
-    // Adds "Delete" to action bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -89,8 +74,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.ab_add:
+//                startActivity(new Intent(this, Main2Activity.class));
+
                 startIntentNewClass();
-                break;
+                return true;
+
             case R.id.ab_delete:
                 if (deleting) {
                     for (int a = 1; a < ll_files.getChildCount(); a++) {
@@ -123,10 +111,28 @@ public class MainActivity extends AppCompatActivity {
                     item.setIcon(null);
                     deleting = true;
                 }
-                break;
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
+
+    // Gives Button with class name function to open that class
+    View.OnClickListener overrideOnClick(final String class_name) {
+        return v -> startIntentClassOptions(csvReadWrite.readCsvFromStorage(class_name));
+    }
+
+    // Turns Class Button to Delete
+    View.OnClickListener overrideOnClickDelete(final String class_name) {
+        return v -> deleteClass(class_name);
+    }
+
+    // Gives Button when there are no classes function to create a new class
+    View.OnClickListener overrideOnClickNewClass() {
+        return v -> startIntentNewClass();
+    }
+
 
     public boolean isEmpty(String[] lst) {
         if (lst.length == 0)

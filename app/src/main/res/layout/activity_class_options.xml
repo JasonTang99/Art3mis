@@ -6,185 +6,54 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-<!--  TODO: Set to same size center max width align left-->
   <TextView
       android:id="@+id/tv_current_grade"
-      android:layout_width="wrap_content"
+      android:layout_width="275dp"
       android:layout_height="wrap_content"
       android:layout_margin="8dp"
+      android:layout_gravity="center"
       android:text="@string/curr_grade"
       android:textSize="20sp"/>
 
   <TextView
       android:id="@+id/tv_how_much"
-      android:layout_width="wrap_content"
+      android:layout_width="275dp"
       android:layout_height="wrap_content"
       android:layout_margin="8dp"
-      android:gravity="center"
-      android:textAlignment="center"
-      android:text=""/>
-
-  <Button
-      android:id="@+id/b_edit_grades"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="8dp"
-      android:text="@string/modify_grades"
-      android:onClick="openGrades"/>
+      android:layout_gravity="center"
+      android:text=""
+      android:textSize="15sp"
+      android:visibility="gone"/>
 
   <EditText
       android:id="@+id/et_how_much"
-      android:layout_width="wrap_content"
+      android:layout_width="275dp"
       android:layout_height="wrap_content"
       android:layout_margin="8dp"
+      android:layout_gravity="center"
       android:ems="10"
       android:hint="@string/what_grade"
       android:inputType="numberDecimal" />
 
   <Button
       android:id="@+id/b_how_much"
-      android:layout_width="wrap_content"
+      android:layout_width="275dp"
       android:layout_height="wrap_content"
       android:layout_margin="8dp"
+      android:layout_gravity="center"
       android:onClick="showHowMuch"
+      style="@style/MainButton"
       android:text="@string/how_much"/>
 
+
+  <Button
+      android:id="@+id/b_edit_grades"
+      android:layout_width="275dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="8dp"
+      android:onClick="openGrades"
+      style="@style/MainButton"
+      android:text="@string/modify_grades" />
+
 </LinearLayout>
-
-<!--<androidx.constraintlayout.widget.ConstraintLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-
-
-<!--  <Button-->
-<!--      android:id="@+id/b_edit_grades"-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:layout_marginBottom="8dp"-->
-<!--      android:layout_marginEnd="8dp"-->
-<!--      android:layout_marginLeft="8dp"-->
-<!--      android:layout_marginRight="8dp"-->
-<!--      android:layout_marginStart="8dp"-->
-<!--      android:layout_marginTop="8dp"-->
-<!--      android:text="@string/modify_grades"-->
-<!--      android:onClick="openGrades"-->
-<!--      app:layout_constraintBottom_toBottomOf="parent"-->
-<!--      app:layout_constraintEnd_toEndOf="parent"-->
-<!--      app:layout_constraintStart_toStartOf="parent"-->
-<!--      app:layout_constraintTop_toTopOf="parent"-->
-<!--      app:layout_constraintVertical_bias="0.3" />-->
-
-<!--  <Button-->
-<!--      android:id="@+id/b_how_much"-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:layout_marginBottom="8dp"-->
-<!--      android:layout_marginEnd="8dp"-->
-<!--      android:layout_marginLeft="8dp"-->
-<!--      android:layout_marginRight="8dp"-->
-<!--      android:layout_marginStart="8dp"-->
-<!--      android:layout_marginTop="8dp"-->
-<!--      android:onClick="showHowMuch"-->
-<!--      android:text="@string/how_much"-->
-<!--      app:layout_constraintBottom_toBottomOf="parent"-->
-<!--      app:layout_constraintEnd_toEndOf="parent"-->
-<!--      app:layout_constraintStart_toStartOf="parent"-->
-<!--      app:layout_constraintTop_toTopOf="parent"-->
-<!--      app:layout_constraintVertical_bias="0.6" />-->
-
-<!--  <TextView-->
-<!--      android:id="@+id/tv_current_grade"-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:layout_marginBottom="8dp"-->
-<!--      android:layout_marginEnd="8dp"-->
-<!--      android:layout_marginLeft="8dp"-->
-<!--      android:layout_marginRight="8dp"-->
-<!--      android:layout_marginStart="8dp"-->
-<!--      android:layout_marginTop="8dp"-->
-<!--      android:text=""-->
-<!--      android:textSize="20sp"-->
-<!--      app:layout_constraintBottom_toTopOf="@+id/b_edit_grades"-->
-<!--      app:layout_constraintEnd_toEndOf="parent"-->
-<!--      app:layout_constraintStart_toStartOf="parent"-->
-<!--      app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--  <EditText-->
-<!--      android:id="@+id/et_how_much"-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:layout_marginBottom="8dp"-->
-<!--      android:layout_marginEnd="8dp"-->
-<!--      android:layout_marginLeft="8dp"-->
-<!--      android:layout_marginRight="8dp"-->
-<!--      android:layout_marginStart="8dp"-->
-<!--      android:layout_marginTop="8dp"-->
-<!--      android:ems="10"-->
-<!--      android:hint="@string/what_grade"-->
-<!--      android:inputType="numberDecimal"-->
-<!--      app:layout_constraintBottom_toBottomOf="parent"-->
-<!--      app:layout_constraintEnd_toEndOf="parent"-->
-<!--      app:layout_constraintHorizontal_bias="0.503"-->
-<!--      app:layout_constraintStart_toStartOf="parent"-->
-<!--      app:layout_constraintTop_toTopOf="parent"-->
-<!--      app:layout_constraintVertical_bias="0.721"-->
-<!--      />-->
-
-<!--  <TextView-->
-<!--      android:id="@+id/tv_how_much"-->
-<!--      android:layout_width="wrap_content"-->
-<!--      android:layout_height="wrap_content"-->
-<!--      android:layout_marginBottom="8dp"-->
-<!--      android:layout_marginEnd="8dp"-->
-<!--      android:layout_marginLeft="8dp"-->
-<!--      android:layout_marginRight="8dp"-->
-<!--      android:layout_marginStart="8dp"-->
-<!--      android:layout_marginTop="8dp"-->
-<!--      android:gravity="center"-->
-<!--      android:textAlignment="center"-->
-
-<!--      android:text=""-->
-<!--      app:layout_constraintBottom_toTopOf="@+id/b_edit_grades"-->
-<!--      app:layout_constraintEnd_toEndOf="parent"-->
-<!--      app:layout_constraintStart_toStartOf="parent"-->
-<!--      app:layout_constraintTop_toBottomOf="@+id/tv_current_grade" />-->
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--<Button-->
-<!--android:id="@+id/b_current_grade"-->
-<!--android:layout_width="wrap_content"-->
-<!--android:layout_height="wrap_content"-->
-<!--android:layout_marginBottom="8dp"-->
-<!--android:layout_marginEnd="8dp"-->
-<!--android:layout_marginLeft="8dp"-->
-<!--android:layout_marginRight="8dp"-->
-<!--android:layout_marginStart="8dp"-->
-<!--android:layout_marginTop="8dp"-->
-<!--android:text="@string/current_grade"-->
-<!--android:onClick="showCurrentGrade"-->
-<!--app:layout_constraintBottom_toBottomOf="parent"-->
-<!--app:layout_constraintEnd_toEndOf="parent"-->
-<!--app:layout_constraintStart_toStartOf="parent"-->
-<!--app:layout_constraintTop_toTopOf="parent"-->
-<!--app:layout_constraintVertical_bias="0.45" />-->
-
-    <!--  <Button-->
-    <!--      android:id="@+id/b_home"-->
-    <!--      android:layout_width="wrap_content"-->
-    <!--      android:layout_height="wrap_content"-->
-    <!--      android:layout_marginBottom="8dp"-->
-    <!--      android:layout_marginEnd="8dp"-->
-    <!--      android:layout_marginLeft="8dp"-->
-    <!--      android:layout_marginRight="8dp"-->
-    <!--      android:layout_marginStart="8dp"-->
-    <!--      android:layout_marginTop="8dp"-->
-    <!--      android:onClick="openHome"-->
-    <!--      android:text="@string/home"-->
-    <!--      app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--      app:layout_constraintEnd_toEndOf="parent"-->
-    <!--      app:layout_constraintStart_toStartOf="parent"-->
-    <!--      app:layout_constraintTop_toTopOf="parent"-->
-    <!--      app:layout_constraintVertical_bias="0.9" />-->

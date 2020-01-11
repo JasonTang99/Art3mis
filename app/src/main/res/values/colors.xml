@@ -5,7 +5,9 @@
   <color name="colorAccent">#393e46</color>
   <color name="colorAccentDark">#222831</color>
   <color name="error">#89EB0210</color>
+  <color name="transparent">#00111111</color>
 
   <color name="textPrimary">#353535</color>
   <color name="textPrimaryLight">#777777</color>
+  <color name="textPrimaryInv">#EEEEEE</color>
 </resources>
