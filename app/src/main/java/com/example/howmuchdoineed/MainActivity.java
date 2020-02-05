@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("AHH");
         if (ll_files != null) {
             ll_files.removeAllViews();
         }
@@ -72,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     for (int a = 0; a < ll_files.getChildCount(); a++) {
                         View child = ll_files.getChildAt(a);
-                        System.out.println(child.getTag());
                         if ( (child instanceof Button) && (child.getTag() == "b_new_class") ) {
                             Button button = (Button) ll_files.getChildAt(a);
                             String className = button.getText().toString();
