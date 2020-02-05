@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.ab_delete:
                 if (deleting) {
-                    for (int a = 1; a < ll_files.getChildCount(); a++) {
+                    for (int a = 0; a < ll_files.getChildCount(); a++) {
                         View child = ll_files.getChildAt(a);
                         if ( (child instanceof Button) && (child.getTag() == "b_new_class") ) {
                             Button button = (Button) ll_files.getChildAt(a);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     item.setIcon(R.drawable.ic_action_delete);
                     deleting = false;
                 } else {
-                    for (int a = 1; a < ll_files.getChildCount(); a++) {
+                    for (int a = 0; a < ll_files.getChildCount(); a++) {
                         View child = ll_files.getChildAt(a);
                         System.out.println(child.getTag());
                         if ( (child instanceof Button) && (child.getTag() == "b_new_class") ) {

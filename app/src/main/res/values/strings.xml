@@ -20,6 +20,7 @@
     <string name="ic_del">Delete Class</string>
 
     <string name="curr_grade">Current Grade: </string>
+    <string name="curr_grade_0">Current Grade: 0.00%</string>
     <string name="delete">Delete</string>
 
     <string name="dialog_msg">Are you sure you want to delete</string>

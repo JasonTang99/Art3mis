@@ -2,7 +2,6 @@ package com.example.howmuchdoineed;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Build;
