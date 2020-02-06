@@ -33,6 +33,7 @@ public class EditGradesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_grades);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("");
 
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);

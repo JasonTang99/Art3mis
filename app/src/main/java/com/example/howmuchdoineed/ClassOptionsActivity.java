@@ -26,6 +26,7 @@ public class ClassOptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_options);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("");
 
         sent = (ArrayList<String[]>) getIntent().getSerializableExtra("Arraylist");
         courseName = sent.get(0);

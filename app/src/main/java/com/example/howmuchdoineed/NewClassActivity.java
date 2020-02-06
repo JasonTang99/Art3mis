@@ -35,7 +35,7 @@ public class NewClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_class);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setTitle("");
 
         baseDir = this.getFilesDir().toString();
         csvReadWrite = new CsvReadWrite(baseDir);
