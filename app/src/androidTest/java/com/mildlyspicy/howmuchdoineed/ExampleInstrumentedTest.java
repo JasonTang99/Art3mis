@@ -1,4 +1,4 @@
-package com.example.howmuchdoineed;
+package com.mildlyspicy.howmuchdoineed;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.howmuchdoineed", appContext.getPackageName());
+        assertEquals("com.mildlyspicy.howmuchdoineed", appContext.getPackageName());
     }
 }

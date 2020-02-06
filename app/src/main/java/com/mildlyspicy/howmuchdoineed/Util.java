@@ -1,4 +1,4 @@
-package com.example.howmuchdoineed;
+package com.mildlyspicy.howmuchdoineed;
 
 
 import com.opencsv.CSVReader;
@@ -7,16 +7,6 @@ import com.opencsv.CSVWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.util.AttributeSet;
-import android.widget.ScrollView;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 
 class CsvReadWrite {
     private String baseDir;

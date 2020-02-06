@@ -1,4 +1,4 @@
-package com.example.howmuchdoineed;
+package com.mildlyspicy.howmuchdoineed;
 
 import org.junit.Test;
 

@@ -8,7 +8,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        applicationId "com.example.howmuchdoineed"
+        applicationId "com.mildlyspicy.howmuchdoineed"
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
